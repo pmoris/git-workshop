@@ -1,0 +1,4 @@
+# ignore _build directory and make it
+# its own repo with a remote pointing to
+# the bitbucket page repo
+_build/
