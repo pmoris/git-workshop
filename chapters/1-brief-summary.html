@@ -1,0 +1,351 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="2. Revising the basics" href="2-revising-the-basics.html" /><link rel="prev" title="Workshop: git collaboration" href="../index.html" />
+
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+        <title>1. A brief summary of git - Workshop: git collaboration</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --color-brand-primary: #336B65;
+  --color-brand-content: #336B65;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #99B5B2;
+  --color-brand-content: #66908B;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #99B5B2;
+  --color-brand-content: #66908B;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Workshop: git collaboration</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  
+  <span class="sidebar-brand-text">Workshop: git collaboration</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">1. A brief summary of git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-revising-the-basics.html">2. Revising the basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-rewriting-history.html">3. Rewriting history (lite edition)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-remotes.html">4. Working with remotes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-branching.html">5. Branching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-collaboration.html">6. Collaboration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-what-is-next.html">7. What is next?</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="a-brief-summary-of-git">
+<h1><span class="section-number">1. </span>A brief summary of git<a class="headerlink" href="#a-brief-summary-of-git" title="Link to this heading">#</a></h1>
+<section id="the-what-and-why-of-git">
+<h2><span class="section-number">1.1. </span>The what and why of git<a class="headerlink" href="#the-what-and-why-of-git" title="Link to this heading">#</a></h2>
+<p>Git is a <strong>distributed</strong> <strong>version control</strong> system. It can encourage reproducible science by, among other things:</p>
+<ul class="simple">
+<li><p>Tracking the history of your projects, allowing you to reference specific snapshots.</p></li>
+<li><p>Allowing you to easily revert mistakes or to jump back in time.</p></li>
+<li><p>Providing a free “backup” of your code on a remote server.</p></li>
+<li><p>Enabling collaboration on projects and coordination of tasks via branching and merging (<strong>=&gt; what this workshop will focus on</strong>).</p></li>
+<li><p>Automating things like unit tests and deployment.</p></li>
+</ul>
+<p>You will commonly interact with three distinct areas where files can reside in git: the <em>working directory</em>, the <a class="reference external" href="https://git-scm.com/about/staging-area"><em>staging area or index</em></a> and the <em>repository</em> consisting of commits or snapshots. The working directory is just that, the state of the files as you see them on your machine when you open them in a file editor (WYSIWYG!). The repository is where snapshots (or commits) of previous states of your working directory live. The staging area is for <a class="reference external" href="https://stackoverflow.com/questions/25351450/what-does-adding-to-the-index-really-mean-in-git"><em>composing the shot</em></a> and it allows you to review snapshots before saving them and also to only snapshot specific files or even parts of files.</p>
+<figure class="align-center" id="fig-gitstages-target">
+<img alt="" src="../_images/git-brief-flow.png" />
+<figcaption>
+<p><span class="caption-text">The three stages of git</span><a class="headerlink" href="#fig-gitstages-target" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>As always, the Pro Git book contains a nice description of the what and why of git too: https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F.</p>
+</div>
+</section>
+<section id="a-peek-under-the-hood">
+<h2><span class="section-number">1.2. </span>A peek under the hood<a class="headerlink" href="#a-peek-under-the-hood" title="Link to this heading">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Below is a very brief summary of what is explained in the <a class="reference external" href="https://pmoris.github.io/git-gud/#/2/1">git gud presentation on git’s internals</a> (this link points directly to an overview page with other resources, press <code class="docutils literal notranslate"><span class="pre">ESC</span></code> to show entire presentation).</p>
+<p>Depending on your familiarity with git, some of this information might still be too hard to digest right now. If so, come back to it later after you have completed the rest of the workshop. Or click on the sources of the figures to learn more.</p>
+</div>
+<p>Under the hood, git is all about those commits.</p>
+<p>More specifically, it consists of a directed acyclic graph that connects <em>commits</em> (snapshots), pointing to <em>trees</em> (directories), pointing to (file) <em>blobs</em>. Blobs represent files and their content (at a particular point in time), uniquely named via a hash function (SHA-1). Trees represent directory structure and file names. Commits record meta-data about the snapshots (who created it? when? what is in there?) and their names are also derived from a hash function of their contents.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This results in commit IDs always being unique, being based not only on the state of your files, but also on when it was created and by whom. This will become important when we talk about certain types of conflicts later on.</p>
+</div>
+<figure class="align-center" id="fig-gitobjects-target">
+<img alt="" src="../_images/commit-and-tree.png" />
+<figcaption>
+<p><span class="caption-text"><strong>Overview of the different git objects</strong>: A <em>commit</em> object, shown in grey, describing the author and date. It points to a <em>tree</em> object, which lists the contents of a directory. Each filename line points to a specific <em>blob</em> object. The blobs store the actual content of the files in the repo. All git objects are described by a SHA-1 hash (shorted to the first 5 characters here).
+Source: <a class="reference external" href="https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell">https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell</a></span><a class="headerlink" href="#fig-gitobjects-target" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The succession of commits pointing to previous commits forms a history of snapshots of a repository at specific points in time. The history isn’t always a straight line, because a commit could very well have multiple parent commits, e.g. when two different commits are merged into a single one (more on <em>merging</em> later).</p>
+<figure class="align-center" id="fig-commit-target">
+<img alt="" src="../_images/commits-and-parents.png" />
+<figcaption>
+<p><span class="caption-text"><strong>History of commits</strong>: Commits point to one another and form a history of snapshots.
+Source: <a class="reference external" href="https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell">https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell</a></span><a class="headerlink" href="#fig-commit-target" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Lastly, take note that in this view, <em>branches</em> are nothing more than pointers/labels/bookmarks that refer to specific commits. The <em><code class="docutils literal notranslate"><span class="pre">HEAD</span></code></em> is yet another pointer, that keeps track of which branch (or sometimes a specific <em>detached</em> commit) your repository is <em>checked out</em> at (usually, see <a class="reference external" href="https://git-scm.com/docs/git-checkout#_detached_head">detached HEAD</a>). It is used as a reference and it tells git which files to show you in your working directory when switching branches or when checking out older commits). This is also how git is able to tell which files were altered in the working directory compared to the previous commit (or when performing a <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">diff</span></code>).</p>
+<figure class="align-center" id="fig-branch-target">
+<img alt="" src="../_images/checkout-master.png" />
+<figcaption>
+<p><span class="caption-text"><strong>Branches as labels</strong>: in this example, the repository is checkout out at commit <code class="docutils literal notranslate"><span class="pre">f30ab</span></code>, currently also known as <code class="docutils literal notranslate"><span class="pre">master</span></code> (as indicated by <code class="docutils literal notranslate"><span class="pre">HEAD</span></code>). There is one newer commit based on this one (<code class="docutils literal notranslate"><span class="pre">87ab2</span></code>), bearing the branch name <code class="docutils literal notranslate"><span class="pre">testing</span></code>.
+Source: <a class="reference external" href="https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell">https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell</a></span><a class="headerlink" href="#fig-branch-target" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Remote repositories are another aspect worth talking about, but we will do this in a later chapter.</p>
+<hr class="docutils" />
+<p>This brief overview covers most of the important things to know about git. You can refer back to it later after doing some exercises, at which points things will hopefully start to make more sense.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="2-revising-the-basics.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">2. </span>Revising the basics</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Home</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Pieter Moris
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">1. A brief summary of git</a><ul>
+<li><a class="reference internal" href="#the-what-and-why-of-git">1.1. The what and why of git</a></li>
+<li><a class="reference internal" href="#a-peek-under-the-hood">1.2. A peek under the hood</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    </body>
+</html>

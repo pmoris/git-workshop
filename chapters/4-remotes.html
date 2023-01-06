@@ -1,0 +1,396 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="5. Branching" href="5-branching.html" /><link rel="prev" title="3. Rewriting history (lite edition)" href="3-rewriting-history.html" />
+
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+        <title>4. Working with remotes - Workshop: git collaboration</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --color-brand-primary: #336B65;
+  --color-brand-content: #336B65;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #99B5B2;
+  --color-brand-content: #66908B;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #99B5B2;
+  --color-brand-content: #66908B;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Workshop: git collaboration</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  
+  <span class="sidebar-brand-text">Workshop: git collaboration</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1-brief-summary.html">1. A brief summary of git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-revising-the-basics.html">2. Revising the basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-rewriting-history.html">3. Rewriting history (lite edition)</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">4. Working with remotes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-branching.html">5. Branching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-collaboration.html">6. Collaboration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-what-is-next.html">7. What is next?</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="working-with-remotes">
+<h1><span class="section-number">4. </span>Working with remotes<a class="headerlink" href="#working-with-remotes" title="Link to this heading">#</a></h1>
+<p>This section will teach you the basics of working with remote repositories, an import pre-requisite for collaborating with git.</p>
+<hr class="docutils" />
+<p>Up until now, we have been using git locally on our own machines. In most cases however, we also use a remote repository on a git server like GitHub or Bitbucket to store a copy of our repo. In git, all contributors as well as any remote servers, store a full copy of the repository, including the full history of all commits and the branch structure. This distributed nature is what allows for easy collaboration with others and even makes it possible to perform more advanced methods of sharing (like working on multiple different remotes that are accessible by different parties).</p>
+<figure class="align-center" id="fig-distributed-target">
+<img alt="" src="../_images/distributed.png" />
+<figcaption>
+<p><span class="caption-text">Git is a <em>distributed</em> version control system.
+Source: <a class="reference external" href="https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control">https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control</a></span><a class="headerlink" href="#fig-distributed-target" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes">https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes</a></p></li>
+<li><p><a class="reference external" href="https://www.atlassian.com/git/tutorials/syncing">https://www.atlassian.com/git/tutorials/syncing</a></p></li>
+</ul>
+</div>
+<section id="creating-and-pushing-to-a-remote-repository">
+<h2><span class="section-number">4.1. </span>Creating and pushing to a remote repository<a class="headerlink" href="#creating-and-pushing-to-a-remote-repository" title="Link to this heading">#</a></h2>
+<p>The following section will be explained from the perspective of Bitbucket, but the steps are similar for any git server.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-0">
+Exercise</label><div class="sd-tab-content docutils">
+<div class="hint admonition">
+<p class="admonition-title">Instructions</p>
+<ul class="simple">
+<li><p>Create a new repository on Bitbucket under your own workspace. Do not let Bitbucket include a readme or <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> file for you, just make a bare repo.</p></li>
+<li><p>Add the new remote repository to your local repo and name it <code class="docutils literal notranslate"><span class="pre">origin</span></code>.</p></li>
+<li><p>Push your local <code class="docutils literal notranslate"><span class="pre">master</span></code> branch to the remote under the same name.</p></li>
+</ul>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-1">
+Solution</label><div class="sd-tab-content docutils">
+<p>To create a new repo on Bitbucket, follow the instructions listed <a class="reference external" href="https://support.atlassian.com/bitbucket-cloud/docs/create-a-git-repository/">in their documentation</a>.</p>
+<p>The next steps are usually listed as an example in the empty repository. The basic command is  <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">add</span> <span class="pre">&lt;local-shortname&gt;</span> <span class="pre">&lt;remote-url&gt;</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>origin<span class="w"> </span>git@bitbucket.org:pmoris/git-collab.git
+git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>master
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">-u</span></code> flag stands for <code class="docutils literal notranslate"><span class="pre">--set-upstream</span></code> and it sets your local branch (<code class="docutils literal notranslate"><span class="pre">master</span></code>) to track an upstream one with the same name (<code class="docutils literal notranslate"><span class="pre">origin/master</span></code>), setting up this association for any future push or pull operation. I.e. when you are on the master branch, <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span></code> will now automatically push your local <code class="docutils literal notranslate"><span class="pre">master</span></code> to the remote <code class="docutils literal notranslate"><span class="pre">master</span></code> branch, without needing to specify it.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To setup an HTTPS connection instead of an SSH one, the URL needs to be slightly different: <code class="docutils literal notranslate"><span class="pre">https://pmoris&#64;bitbucket.org/pmoris/git-collab.git</span></code>. However, unlike SSH, HTTPS requires you to supply a username and password every time you communicate with the remote (unless you setup a <a class="reference external" href="https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage">credential cache</a>).</p>
+</div>
+<p>After pushing to the remote, a local <em>remote-tracking</em> branch named <code class="docutils literal notranslate"><span class="pre">origin/master</span></code> is created. More on remote branches later, but in a nutshell, it is a local reference that keeps track of the state of the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch on your remote named <code class="docutils literal notranslate"><span class="pre">origin</span></code>.</p>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Whenever you want to push an already initialized repository to a remote, make sure that you do not let the git server initialize the repo with any files. If you were to do so, you would already end up with conflicts the first time you try to push your changes.</p>
+<p>Let’s give that a try!</p>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-2" name="sd-tab-set-1" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-2">
+Exercise</label><div class="sd-tab-content docutils">
+<div class="hint admonition">
+<p class="admonition-title">Instructions</p>
+<ul class="simple">
+<li><p>Create another new repository on Bitbucket under your own workspace. This time, do let Bitbucket include a readme.</p></li>
+<li><p>Add the new remote repository to your local repo as <code class="docutils literal notranslate"><span class="pre">borked</span></code>.</p></li>
+<li><p>Push your local <code class="docutils literal notranslate"><span class="pre">master</span></code> branch to the new non-empty remote.</p></li>
+</ul>
+</div>
+</div>
+<input id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-3">
+Solution</label><div class="sd-tab-content docutils">
+<p>After creating a new repository on Bitbucket, bearing the original name <code class="docutils literal notranslate"><span class="pre">git-collab-2</span></code> in my case, you can add it to your repository as an additional remote.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>borked<span class="w"> </span>git@bitbucket.org:pmoris/git-collab-2.git
+</pre></div>
+</div>
+<p>This goes to show that you can setup your local repository to connect to multiple different remote repositories. They can be on different git servers, or even different locations on your own machine.</p>
+<p>Next, we attempt to push our local <code class="docutils literal notranslate"><span class="pre">master</span></code> branch to this new remote:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>push<span class="w"> </span>borked<span class="w"> </span>master
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Enter<span class="w"> </span>passphrase<span class="w"> </span><span class="k">for</span><span class="w"> </span>key<span class="w"> </span><span class="s1">&#39;/home/pmoris/.ssh/id_ed25519&#39;</span>:
+To<span class="w"> </span>bitbucket.org:pmoris/git-collab-2.git
+<span class="w"> </span>!<span class="w"> </span><span class="o">[</span>rejected<span class="o">]</span><span class="w">        </span>master<span class="w"> </span>-&gt;<span class="w"> </span>master<span class="w"> </span><span class="o">(</span>fetch<span class="w"> </span>first<span class="o">)</span>
+error:<span class="w"> </span>failed<span class="w"> </span>to<span class="w"> </span>push<span class="w"> </span>some<span class="w"> </span>refs<span class="w"> </span>to<span class="w"> </span><span class="s1">&#39;git@bitbucket.org:pmoris/git-collab-2.git&#39;</span>
+hint:<span class="w"> </span>Updates<span class="w"> </span>were<span class="w"> </span>rejected<span class="w"> </span>because<span class="w"> </span>the<span class="w"> </span>remote<span class="w"> </span>contains<span class="w"> </span>work<span class="w"> </span>that<span class="w"> </span>you<span class="w"> </span><span class="k">do</span>
+hint:<span class="w"> </span>not<span class="w"> </span>have<span class="w"> </span>locally.<span class="w"> </span>This<span class="w"> </span>is<span class="w"> </span>usually<span class="w"> </span>caused<span class="w"> </span>by<span class="w"> </span>another<span class="w"> </span>repository<span class="w"> </span>pushing
+hint:<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>same<span class="w"> </span>ref.<span class="w"> </span>You<span class="w"> </span>may<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span>first<span class="w"> </span>integrate<span class="w"> </span>the<span class="w"> </span>remote<span class="w"> </span>changes
+hint:<span class="w"> </span><span class="o">(</span>e.g.,<span class="w"> </span><span class="s1">&#39;git pull ...&#39;</span><span class="o">)</span><span class="w"> </span>before<span class="w"> </span>pushing<span class="w"> </span>again.
+hint:<span class="w"> </span>See<span class="w"> </span>the<span class="w"> </span><span class="s1">&#39;Note about fast-forwards&#39;</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s1">&#39;git push --help&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>details.
+</pre></div>
+</div>
+<p>As you can see, git rejected our push because there were differences between the local repository and the remote one. You can use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code> and compare the output to commit history of the remote repo. The latter contains one unique initial commit that was created you instructed Bitbucket to add a readme.</p>
+<p>Also note that this time we used the full push command <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">&lt;remote&gt;</span> <span class="pre">&lt;branch&gt;</span></code>, without setting up an upstream reference.</p>
+<p>You <em>could</em> resolve this by issuing a <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">--force</span></code>. In most cases this is a <strong>very dangerous (!)</strong> command that you should avoid using, especially when collaborating with others! It is one of git’s destructive commands that could erase work that was done, not just by you - like it is the case for <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span> <span class="pre">--hard</span></code> or <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">--</span> <span class="pre">&lt;filepath&gt;</span></code> - but also work that was done by other contributors. In this case though, where you just created a new repository, it can be used to resolve this issue.</p>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Here are a few additional commands that you might find useful for managing remote repositories:</p>
+<ul class="simple">
+<li><p>Show remotes: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span></code> (additionally, try adding the <code class="docutils literal notranslate"><span class="pre">-v</span></code> flag).</p></li>
+<li><p>Update remote data: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">fetch</span> <span class="pre">&lt;remote&gt;</span></code> or use <code class="docutils literal notranslate"><span class="pre">--all</span></code> to not specify a specific remote (more on fetching later).</p></li>
+<li><p>Retrieving a remote URL: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">show</span> <span class="pre">&lt;remote&gt;</span></code> (check what is says under “tracked”, it shows the associations set up by that <code class="docutils literal notranslate"><span class="pre">--set-upstream</span></code> command we saw earlier).</p></li>
+<li><p>Renaming remotes: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">rename</span> <span class="pre">&lt;old-remote&gt;</span> <span class="pre">&lt;new-remote&gt;</span></code>.</p></li>
+<li><p>Removing remotes: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">remove</span> <span class="pre">&lt;remote&gt;</span></code>.</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="5-branching.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">5. </span>Branching</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="3-rewriting-history.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">3. </span>Rewriting history (lite edition)</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Pieter Moris
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">4. Working with remotes</a><ul>
+<li><a class="reference internal" href="#creating-and-pushing-to-a-remote-repository">4.1. Creating and pushing to a remote repository</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    </body>
+</html>

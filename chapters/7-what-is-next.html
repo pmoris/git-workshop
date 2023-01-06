@@ -1,0 +1,325 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="prev" title="6. Collaboration" href="6-collaboration.html" />
+
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+        <title>7. What is next? - Workshop: git collaboration</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --color-brand-primary: #336B65;
+  --color-brand-content: #336B65;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #99B5B2;
+  --color-brand-content: #66908B;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #99B5B2;
+  --color-brand-content: #66908B;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Workshop: git collaboration</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  
+  <span class="sidebar-brand-text">Workshop: git collaboration</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1-brief-summary.html">1. A brief summary of git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-revising-the-basics.html">2. Revising the basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-rewriting-history.html">3. Rewriting history (lite edition)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-remotes.html">4. Working with remotes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-branching.html">5. Branching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-collaboration.html">6. Collaboration</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">7. What is next?</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="what-is-next">
+<h1><span class="section-number">7. </span>What is next?<a class="headerlink" href="#what-is-next" title="Link to this heading">#</a></h1>
+<p>If you would like to learn more about git, here are a few resources and topics to get you started.</p>
+<section id="general-topics">
+<h2><span class="section-number">7.1. </span>General topics<a class="headerlink" href="#general-topics" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Learn to love <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">stash</span></code>: <a class="reference external" href="https://www.atlassian.com/git/tutorials/saving-changes/git-stash">https://www.atlassian.com/git/tutorials/saving-changes/git-stash</a> &amp; <a class="reference external" href="https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning">https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning</a>.</p></li>
+<li><p>Using meaningful commit messages: <a class="reference external" href="https://cbea.ms/git-commit/">https://cbea.ms/git-commit/</a></p></li>
+<li><p>Interactive staging: a very useful alternative to stage files (or parts of files) separately, when you don’t have access to a GUI that can do this. <a class="reference external" href="https://git-scm.com/book/en/v2/Git-Tools-Interactive-Staging">https://git-scm.com/book/en/v2/Git-Tools-Interactive-Staging</a></p></li>
+<li><p>Interactive rebasing: <a class="reference external" href="https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History">https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History</a> (<strong>WARNING, AGAIN!</strong> Only use this for cleaning up local or private branches, because rewriting history of commits that were already pushed to a remote and used by others will lead to disaster.)</p></li>
+<li><p>The git config: <a class="reference external" href="https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-config">https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-config</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reflog</span></code>: a get-out-of-jail card (but don’t rely on it too much).</p></li>
+<li><p>More on why you (mostly) shouldn’t use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">--force</span></code>: <a class="reference external" href="https://www.datree.io/resources/git-push-force">https://www.datree.io/resources/git-push-force</a></p></li>
+<li><p>git branching naming conventions: e.g. `</p></li>
+<li><p>A tutorial I found as I was wrapping up my own, to be used in case I missed something important ;) : <a class="reference external" href="https://coderefinery.github.io/git-collaborative/centralized/#push-your-change-as-a-new-branch">https://coderefinery.github.io/git-collaborative/centralized/#push-your-change-as-a-new-branch</a></p></li>
+<li><p>Explore git tags. Hint: they are just pointers like branches.</p></li>
+<li><p>Read about <code class="docutils literal notranslate"><span class="pre">cherrypick</span></code>.</p></li>
+<li><p><a class="reference external" href="https://ohshitgit.com/">https://ohshitgit.com/</a></p></li>
+</ul>
+<section id="branch-naming-conventions">
+<h3><span class="section-number">7.1.1. </span>Branch naming conventions<a class="headerlink" href="#branch-naming-conventions" title="Link to this heading">#</a></h3>
+<p>Branches can be given a particular name depending on their purpose, e.g. <code class="docutils literal notranslate"><span class="pre">fix-plotting-functions</span></code> or <code class="docutils literal notranslate"><span class="pre">feature-gsea</span></code>. These names can also be automatically created when opening a branch to fix a specific issue that was opened on the git server for example.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://idiv-biodiversity.github.io/git-knowledge-base/branch-naming-conventions.html">https://idiv-biodiversity.github.io/git-knowledge-base/branch-naming-conventions.html</a></p></li>
+<li><p><a class="reference external" href="https://confluence.atlassian.com/bitbucketserver/branches-776639968.html">https://confluence.atlassian.com/bitbucketserver/branches-776639968.html</a></p></li>
+</ul>
+</div>
+</section>
+<section id="git-s-revision-syntax">
+<h3><span class="section-number">7.1.2. </span>Git’s revision syntax<a class="headerlink" href="#git-s-revision-syntax" title="Link to this heading">#</a></h3>
+<p>Git uses a special syntax to refer to commits (and also trees) in many different ways.</p>
+<p>For example, instead of specifying the SHA-1 hash of the previous commit, it can also be referred to as <code class="docutils literal notranslate"><span class="pre">HEAD^^</span></code>. <code class="docutils literal notranslate"><span class="pre">HEAD~3</span></code> refers to the third latest commit, while <code class="docutils literal notranslate"><span class="pre">master~3</span></code> does the same thing from the branch’s point of view.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://devhints.io/git-revisions">https://devhints.io/git-revisions</a></p></li>
+<li><p><a class="reference external" href="https://stackoverflow.com/questions/4044368/what-does-tree-ish-mean-in-git">https://stackoverflow.com/questions/4044368/what-does-tree-ish-mean-in-git</a></p></li>
+</ul>
+</div>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          <a class="prev-page" href="6-collaboration.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">6. </span>Collaboration</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Pieter Moris
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">7. What is next?</a><ul>
+<li><a class="reference internal" href="#general-topics">7.1. General topics</a><ul>
+<li><a class="reference internal" href="#branch-naming-conventions">7.1.1. Branch naming conventions</a></li>
+<li><a class="reference internal" href="#git-s-revision-syntax">7.1.2. Git’s revision syntax</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    </body>
+</html>

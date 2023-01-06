@@ -1,0 +1,718 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="4. Working with remotes" href="4-remotes.html" /><link rel="prev" title="2. Revising the basics" href="2-revising-the-basics.html" />
+
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+        <title>3. Rewriting history (lite edition) - Workshop: git collaboration</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --color-brand-primary: #336B65;
+  --color-brand-content: #336B65;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #99B5B2;
+  --color-brand-content: #66908B;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #99B5B2;
+  --color-brand-content: #66908B;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Workshop: git collaboration</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  
+  <span class="sidebar-brand-text">Workshop: git collaboration</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1-brief-summary.html">1. A brief summary of git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-revising-the-basics.html">2. Revising the basics</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">3. Rewriting history (lite edition)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-remotes.html">4. Working with remotes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-branching.html">5. Branching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-collaboration.html">6. Collaboration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-what-is-next.html">7. What is next?</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="rewriting-history-lite-edition">
+<h1><span class="section-number">3. </span>Rewriting history (lite edition)<a class="headerlink" href="#rewriting-history-lite-edition" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p><em>“Who controls the past controls the future. Who controls the present controls the past.”</em></p>
+<ul class="simple">
+<li><p>George Orwell, 1984</p></li>
+</ul>
+</div></blockquote>
+<p>This section goes over some of the most common ways to undo things or making small tweaks to your commit history.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>More info on undoing things can be found in these excellent sections of the Pro Git book:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things">https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things</a></p></li>
+<li><p><a class="reference external" href="https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History">https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History</a></p></li>
+<li><p><a class="reference external" href="https://git-scm.com/book/en/v2/Git-Tools-Reset-Demystified">https://git-scm.com/book/en/v2/Git-Tools-Reset-Demystified</a></p></li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you feel confident, you can skip this section at your own peril! A code block is available <a class="reference internal" href="#"><span class="xref myst">here</span></a> to initialise a repository with all the required components for the following chapters.</p>
+<p>The topics covered in this section are: <code class="docutils literal notranslate"><span class="pre">commit</span> <span class="pre">--amend</span></code>, <code class="docutils literal notranslate"><span class="pre">restore</span></code>, <code class="docutils literal notranslate"><span class="pre">reset</span></code>, <code class="docutils literal notranslate"><span class="pre">revert</span></code> and <code class="docutils literal notranslate"><span class="pre">checkout</span></code>.</p>
+</div>
+<section id="altering-the-most-recent-commit">
+<h2><span class="section-number">3.1. </span>Altering the most recent commit<a class="headerlink" href="#altering-the-most-recent-commit" title="Link to this heading">#</a></h2>
+<p>Uh oh! We forgot to update our readme and did not mention the amazing R script we made. We could simply create a new commit, but let’s try something else instead: modifying the most recent commit.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-0">
+Exercise 3</label><div class="sd-tab-content docutils">
+<div class="hint admonition">
+<p class="admonition-title">Instructions</p>
+<ul class="simple">
+<li><p>Inspect your history of commits before and after this exercise.</p></li>
+<li><p>Update the readme and ask git for a status update.</p></li>
+<li><p>Add the modified readme to the previous commit without making a new one (hint: in git lingo this called <em>amending</em>).</p></li>
+</ul>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-1">
+Solution 3</label><div class="sd-tab-content docutils">
+<p>You can use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code> to show an overview of your previous commits.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>log
+commit<span class="w"> </span>410c0a70ca4415553bed5f636202d2efcf5e6405<span class="w"> </span><span class="o">(</span>HEAD<span class="w"> </span>-&gt;<span class="w"> </span>master<span class="o">)</span>
+Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+Date:<span class="w">   </span>Wed<span class="w"> </span>Aug<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">12</span>:30:36<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+
+<span class="w">    </span>Create<span class="w"> </span>a<span class="w"> </span>vector
+
+<span class="w">    </span>Adds<span class="w"> </span>an<span class="w"> </span>R<span class="w"> </span>script<span class="w"> </span>to<span class="w"> </span>create<span class="w"> </span>a<span class="w"> </span>nifty<span class="w"> </span>vector.
+
+commit<span class="w"> </span>02b6530617bd305f686df19fbbaac4689f5e5cf1
+Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+Date:<span class="w">   </span>Wed<span class="w"> </span>Aug<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">12</span>:19:18<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+
+<span class="w">    </span>Initial<span class="w"> </span>commit
+</pre></div>
+</div>
+<p>Next, alter the files as you see fit.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;\nThis amazing repository houses an R script that creates one vector to rule them all.&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>readme.md
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>status
+On<span class="w"> </span>branch<span class="w"> </span>master
+Changes<span class="w"> </span>not<span class="w"> </span>staged<span class="w"> </span><span class="k">for</span><span class="w"> </span>commit:
+<span class="w">  </span><span class="o">(</span>use<span class="w"> </span><span class="s2">&quot;git add &lt;file&gt;...&quot;</span><span class="w"> </span>to<span class="w"> </span>update<span class="w"> </span>what<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>committed<span class="o">)</span>
+<span class="w">  </span><span class="o">(</span>use<span class="w"> </span><span class="s2">&quot;git restore &lt;file&gt;...&quot;</span><span class="w"> </span>to<span class="w"> </span>discard<span class="w"> </span>changes<span class="w"> </span><span class="k">in</span><span class="w"> </span>working<span class="w"> </span>directory<span class="o">)</span>
+<span class="w">        </span>modified:<span class="w">   </span>readme.md
+
+no<span class="w"> </span>changes<span class="w"> </span>added<span class="w"> </span>to<span class="w"> </span>commit<span class="w"> </span><span class="o">(</span>use<span class="w"> </span><span class="s2">&quot;git add&quot;</span><span class="w"> </span>and/or<span class="w"> </span><span class="s2">&quot;git commit -a&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Git suggests us to use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-a</span></code> (or <code class="docutils literal notranslate"><span class="pre">--all</span></code>, which would <em>add and commit</em> all modified files to a new commit), but because we want to instead update the previous commit message – essentially rewriting history – we will first <code class="docutils literal notranslate"><span class="pre">add</span></code> the changes and then use <code class="docutils literal notranslate"><span class="pre">commit</span> <span class="pre">--amend</span></code> instead (confusingly also beginning with an <em>a</em>).</p>
+<p>This will replace the tip of the current branch by creating a new commit and even allow us to change the commit message. That means you could also use this command to only change the commit message, without changing any of the files’ contents.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>readme.md
+git<span class="w"> </span>commit<span class="w"> </span>--amend
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>GNU<span class="w"> </span>nano<span class="w"> </span><span class="m">4</span>.8<span class="w">                          </span>/home/pmoris/git-collab/.git/COMMIT_EDITMSG
+Create<span class="w"> </span>a<span class="w"> </span>vector
+
+Adds<span class="w"> </span>an<span class="w"> </span>R<span class="w"> </span>script<span class="w"> </span>to<span class="w"> </span>create<span class="w"> </span>a<span class="w"> </span>nifty<span class="w"> </span>vector
+and<span class="w"> </span>talks<span class="w"> </span>about<span class="w"> </span>it<span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>readme.
+
+<span class="c1"># Please enter the commit message for your changes. Lines starting</span>
+<span class="c1"># with &#39;#&#39; will be ignored, and an empty message aborts the commit.</span>
+<span class="c1">#</span>
+<span class="c1"># Date:      Wed Aug 17 12:30:36 2022 +0200</span>
+<span class="c1">#</span>
+<span class="c1"># On branch master</span>
+<span class="c1"># Changes to be committed:</span>
+<span class="c1">#       modified:   readme.md</span>
+<span class="c1">#       new file:   vectors_ftw.R</span>
+<span class="c1">#</span>
+</pre></div>
+</div>
+<p>The log now indeed shows the same number of commits as before, but the most recent one has been replaced.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>log
+commit<span class="w"> </span>b2c2e84a1c0deebd6199e790f0db133fc0e0853c<span class="w"> </span><span class="o">(</span>HEAD<span class="w"> </span>-&gt;<span class="w"> </span>master<span class="o">)</span>
+Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+Date:<span class="w">   </span>Wed<span class="w"> </span>Aug<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">12</span>:30:36<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+
+<span class="w">    </span>Create<span class="w"> </span>a<span class="w"> </span>vector
+
+<span class="w">    </span>Adds<span class="w"> </span>an<span class="w"> </span>R<span class="w"> </span>script<span class="w"> </span>to<span class="w"> </span>create<span class="w"> </span>a<span class="w"> </span>nifty<span class="w"> </span>vector
+<span class="w">    </span>and<span class="w"> </span>talks<span class="w"> </span>about<span class="w"> </span>it<span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>readme.
+
+commit<span class="w"> </span>02b6530617bd305f686df19fbbaac4689f5e5cf1
+Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+Date:<span class="w">   </span>Wed<span class="w"> </span>Aug<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">12</span>:19:18<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+
+<span class="w">    </span>Initial<span class="w"> </span>commit
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Be very careful when amending to a public branch that has already been pushed to a repository! This action will alter commits (essentially removing the most recent one and replacing it with a new version). If you forcefully push this new history to a remote repository, it could become a problem for collaborators that were already basing their work off the original state of the repository. More on that later when we look at other methods of changing the git commit history and how remote repositories work.</p>
+<p><img alt="git-push-force" src="../_images/git-push-force.jpg" /></p>
+</div>
+</section>
+<section id="uncommitted-whoopsies">
+<h2><span class="section-number">3.2. </span>Uncommitted whoopsies<a class="headerlink" href="#uncommitted-whoopsies" title="Link to this heading">#</a></h2>
+<p>What if you want to undo changes in your working directory or staging area, i.e. before you have committed them? How can files be returned to the way they were in a previous commit? This next exercise will teach you!</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-2" name="sd-tab-set-1" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-2">
+Exercise 4</label><div class="sd-tab-content docutils">
+<div class="hint admonition">
+<p class="admonition-title">Instructions</p>
+<ul class="simple">
+<li><p>Inspect the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code> and <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> before, during and after this exercise.</p></li>
+<li><p>Create a new text file and commit it.</p></li>
+<li><p>Add some additional changes to the file and stage it, but do not commit it just yet.</p></li>
+<li><p>Realise that you don’t actually want to stage those additional changes just yet and unstage them.</p></li>
+<li><p>Revert the file back to its original state in your working directory too.</p></li>
+</ul>
+</div>
+</div>
+<input id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-3">
+Solution 4</label><div class="sd-tab-content docutils">
+<p>First we create a new text file and commit it.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;There will be cake at the end.&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>cake.txt
+git<span class="w"> </span>add<span class="w"> </span>cake.txt
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Add cake declaration&quot;</span>
+</pre></div>
+</div>
+<p>Then, we modify the file again and stage it.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;The cake is a lie.&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>cake.txt
+git<span class="w"> </span>add<span class="w"> </span>cake.txt
+</pre></div>
+</div>
+<p>When we check the status, git will actually tell us what we can do to unstage a file.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>status
+On<span class="w"> </span>branch<span class="w"> </span>master
+Changes<span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span>committed:
+<span class="w">  </span>**<span class="o">(</span>use<span class="w"> </span><span class="s2">&quot;git restore --staged &lt;file&gt;...&quot;</span><span class="w"> </span>to<span class="w"> </span>unstage<span class="o">)</span>**
+<span class="w">        </span>modified:<span class="w">   </span>cake.txt
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>restore<span class="w"> </span>--staged<span class="w"> </span>cake.txt
+</pre></div>
+</div>
+<p>After unstaging the file it will still be modified in our working directory. Fortunately, like before, git gives us a suggestion on how to proceed. To undo these changes for the now unstaged (= not primed for committing), but modified file (it really is changed in our working directory still), the <code class="docutils literal notranslate"><span class="pre">restore</span></code> command can be used again.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>status
+On<span class="w"> </span>branch<span class="w"> </span>master
+Changes<span class="w"> </span>not<span class="w"> </span>staged<span class="w"> </span><span class="k">for</span><span class="w"> </span>commit:
+<span class="w">  </span><span class="o">(</span>use<span class="w"> </span><span class="s2">&quot;git add &lt;file&gt;...&quot;</span><span class="w"> </span>to<span class="w"> </span>update<span class="w"> </span>what<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>committed<span class="o">)</span>
+<span class="w">  </span><span class="o">(</span>use<span class="w"> </span><span class="s2">&quot;git restore &lt;file&gt;...&quot;</span><span class="w"> </span>to<span class="w"> </span>discard<span class="w"> </span>changes<span class="w"> </span><span class="k">in</span><span class="w"> </span>working<span class="w"> </span>directory<span class="o">)</span>
+<span class="w">        </span>modified:<span class="w">   </span>cake.txt
+
+no<span class="w"> </span>changes<span class="w"> </span>added<span class="w"> </span>to<span class="w"> </span>commit<span class="w"> </span><span class="o">(</span>use<span class="w"> </span><span class="s2">&quot;git add&quot;</span><span class="w"> </span>and/or<span class="w"> </span><span class="s2">&quot;git commit -a&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>restore<span class="w"> </span>cake.txt
+</pre></div>
+</div>
+<p>Afterwards, our working directory will be clean again. It will be in the same state as it was in the last commit, i.e. the one that the current branch and HEAD are pointing towards, i.e. the most recent one in the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code>. You can check by using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> or by manually inspecting the contents of the files.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cat<span class="w"> </span>cake.txt
+There<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>cake<span class="w"> </span>at<span class="w"> </span>the<span class="w"> </span>end.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the past, prior to git v2.23, unstaging files was handled by <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span> <span class="pre">&lt;filepath&gt;</span></code> and removing changes to a file in the working directory by <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">--</span> <span class="pre">&lt;filepath&gt;</span></code>. Those methods still work, but the <code class="docutils literal notranslate"><span class="pre">restore</span></code> command was introduced to simplify things, because <code class="docutils literal notranslate"><span class="pre">reset</span></code> and <code class="docutils literal notranslate"><span class="pre">checkout</span></code> also serve a bunch of other roles, e.g. when used on commits rather than files. More on this later when we talk about <code class="docutils literal notranslate"><span class="pre">reset</span></code> in the next section and about branches in the section after that, where we showcase the <code class="docutils literal notranslate"><span class="pre">switch</span></code> command (which takes over a few other roles of <code class="docutils literal notranslate"><span class="pre">checkout</span></code>).</p>
+<p>For more reading right now, <em>check out</em> (hehe): <a class="reference external" href="https://stackoverflow.com/questions/58003030/what-is-the-git-restore-command-and-what-is-the-difference-between-git-restor">https://stackoverflow.com/questions/58003030/what-is-the-git-restore-command-and-what-is-the-difference-between-git-restor</a>.</p>
+</div>
+</section>
+<section id="committed-whoopsies">
+<h2><span class="section-number">3.3. </span>Committed whoopsies<a class="headerlink" href="#committed-whoopsies" title="Link to this heading">#</a></h2>
+<p>For bigger <em>whoopsies</em>, we’ll need a different strategy. Let’s suppose we want to completely undo an erroneous commit. There are a few different approaches we could take.</p>
+<p>Suppose we start in the following state and we decide that the changes that were introduced in commit <code class="docutils literal notranslate"><span class="pre">e</span></code> should be undone.</p>
+<figure class="align-center" id="fig-pre-reset-target">
+<img alt="" src="../_images/pre-reset.png" />
+<figcaption>
+<p><span class="caption-text">A git history with a single branch where the latest (erroneous) commit <code class="docutils literal notranslate"><span class="pre">e</span></code> is checked out.</span><a class="headerlink" href="#fig-pre-reset-target" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">revert</span> <span class="pre">&lt;commit&gt;</span></code> is the safest way to undo specific commits, because it does not actually alter your history. Instead, it creates a new commit that undoes a previous one, reverting every change that was introduced at that point. Consequently, it is safe to use when collaborating with others on a remote branch. Also note that any commit can be reverted at any time, not just the most recent one.</p>
+<figure class="align-center" id="fig-revert-target">
+<img alt="" src="../_images/revert.png" />
+<figcaption>
+<p><span class="caption-text">Reverting commit <code class="docutils literal notranslate"><span class="pre">d</span></code> introduces an <em>inverted</em> commit <code class="docutils literal notranslate"><span class="pre">d'</span></code>.</span><a class="headerlink" href="#fig-revert-target" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span> <span class="pre">[</span> <span class="pre">--hard</span> <span class="pre">|</span> <span class="pre">--mixed</span> <span class="pre">|</span> <span class="pre">--soft</span> <span class="pre">]</span> <span class="pre">&lt;commit&gt;</span></code> on the other hand, allows you to restore things back to a previous commit (i.e. remove more recent commits from the history). Like <code class="docutils literal notranslate"><span class="pre">--amend</span></code> and unlike <code class="docutils literal notranslate"><span class="pre">revert</span></code>, this alters the commit history and can thus be dangerous to use when collaborating with others (i.e. when your commits were already pushed to a remote repository).</p>
+<figure class="align-center" id="fig-reset-target">
+<img alt="" src="../_images/reset.png" />
+<figcaption>
+<p><span class="caption-text">Resetting to a previous commit <code class="docutils literal notranslate"><span class="pre">d</span></code> by removing <code class="docutils literal notranslate"><span class="pre">e</span></code>.</span><a class="headerlink" href="#fig-reset-target" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Depending on the additional flag you provide to the command, it will behave slightly differently:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--soft</span></code>: moves what <code class="docutils literal notranslate"><span class="pre">HEAD</span></code> is pointing to (i.e. usually the branch itself) and leaves your working directory and index/stage alone. In simpler terms, it changes your point of reference by telling git you are somewhere else in its history, but it does not alter any files yet.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--mixed</span></code> (default): same as <code class="docutils literal notranslate"><span class="pre">soft</span></code>, but additionally changes the contents of the index/stage to reflect the commit that HEAD now points to.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--hard</span></code>: same as <code class="docutils literal notranslate"><span class="pre">mixed</span></code>, but also makes the working directory resemble the index and thus the commit that was reset too. <strong>This command can erase your work. Use it with caution!</strong></p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Never use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span></code> when commits have already been pushed to a public branch of your remote repository. By doing so, you would reset the public history, similar to what we explained in the <code class="docutils literal notranslate"><span class="pre">--amend</span></code> section. After pushing, you can no longer be sure that none of your collaborators are not already using and relying on those commits.</p>
+<p>Any new commits that are created after resetting, would conflict with the public history on your remote repository (e.g. <code class="docutils literal notranslate"><span class="pre">origin/main</span></code> or <code class="docutils literal notranslate"><span class="pre">origin/branch</span></code>). If you would go ahead and push your altered history anyway (which would require you to <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">--force</span></code>), then others will no longer be able to <code class="docutils literal notranslate"><span class="pre">fetch</span></code> or <code class="docutils literal notranslate"><span class="pre">pull</span></code> from the branch they are working on.</p>
+<p>Instead, you should reserve <code class="docutils literal notranslate"><span class="pre">reset</span></code> for just undoing local work, cleaning up or experimentation. If changes to commits on the remote are required, then <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">revert</span></code> is the appropriate command instead.</p>
+<p><img alt="git-push-force" src="../_images/git-push-force2.jpg" /></p>
+</div>
+<p>The best way to learn this might be by deliberately breaking stuff, so let’s get cracking!</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-4" name="sd-tab-set-2" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-4">
+Exercise</label><div class="sd-tab-content docutils">
+<div class="hint admonition">
+<p class="admonition-title">Instructions</p>
+<ul class="simple">
+<li><p>Create a bunch of new files and modify them one by one, until you have three new commits.</p></li>
+<li><p>Revert the first of the new commits.</p></li>
+</ul>
+<!-- - Make some additional changes in your working directory. -->
+<ul class="simple">
+<li><p>Perform a <code class="docutils literal notranslate"><span class="pre">--soft</span></code> and <code class="docutils literal notranslate"><span class="pre">--mixed</span></code> <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span></code> to the most recent commit and inspect the log before and after.</p></li>
+<li><p>Perform a <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span> <span class="pre">--hard</span></code> reset to the most recent commit. Then realize your mistake and try to undo it!</p></li>
+</ul>
+</div>
+</div>
+<input id="sd-tab-item-5" name="sd-tab-set-2" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-5">
+Solution</label><div class="sd-tab-content docutils">
+<p>First we will create a few new files and commits.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>my-guilty-pleasures.txt
+git<span class="w"> </span>add<span class="w"> </span>my-guilty-pleasures.txt
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Add guilty pleasures&quot;</span>
+touch<span class="w"> </span>the-dress-is-blue.txt
+git<span class="w"> </span>add<span class="w"> </span>*.txt
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Describe dress colour&quot;</span>
+mv<span class="w"> </span>the-dress-is-blue.txt<span class="w"> </span>the-dress-is-white.txt
+git<span class="w"> </span>add<span class="w"> </span>-A
+git<span class="w"> </span>commit<span class="w"> </span>-a<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Update dress colour&quot;</span>
+</pre></div>
+</div>
+<p>Next, we will revert a particular commit. First, find its commit id in the log:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>log
+...
+
+commit<span class="w"> </span>2f3427d19bf2ef5347ed7fb2017fca423c1f9c08
+Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+Date:<span class="w">   </span>Tue<span class="w"> </span>Oct<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">16</span>:04:22<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+
+<span class="w">    </span>Add<span class="w"> </span>guilty<span class="w"> </span>pleasures
+
+commit<span class="w"> </span>94af264c0ec9e4560d23c8bbacbb4370b9e20b65
+Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+Date:<span class="w">   </span>Wed<span class="w"> </span>Sep<span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">15</span>:48:49<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+
+<span class="w">    </span>Add<span class="w"> </span>cake<span class="w"> </span>declaration
+
+...
+</pre></div>
+</div>
+<p>Then revert it. Git is usually happy with just the five to seven first characters of those long IDs (SHA-1 checksums).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>revert<span class="w"> </span>2f342
+Removing<span class="w"> </span>my-guilty-pleasures.txt
+<span class="o">[</span>master<span class="w"> </span>a976b48<span class="o">]</span><span class="w"> </span>Revert<span class="w"> </span><span class="s2">&quot;Add guilty pleasures&quot;</span>
+<span class="w"> </span><span class="m">1</span><span class="w"> </span>file<span class="w"> </span>changed,<span class="w"> </span><span class="m">0</span><span class="w"> </span>insertions<span class="o">(</span>+<span class="o">)</span>,<span class="w"> </span><span class="m">0</span><span class="w"> </span>deletions<span class="o">(</span>-<span class="o">)</span>
+<span class="w"> </span>delete<span class="w"> </span>mode<span class="w"> </span><span class="m">100644</span><span class="w"> </span>my-guilty-pleasures.txt<span class="sb">```</span>
+</pre></div>
+</div>
+<p>It will be gone from your working directory now. But beware, the file is still present in one of the snapshots, it wasn’t truly deleted. Which is a good thing most of the time, but just do not rely on this method to get rid of a password you accidentally committed ;)</p>
+<p>Next, let’s completely undo everything up to the original commit about cake (commit id <code class="docutils literal notranslate"><span class="pre">94af2</span></code> in my case). That is, we will reset (alter) the history, not just introduce reversed new commits to undo old ones.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>reset<span class="w"> </span>--soft<span class="w"> </span>94af2
+</pre></div>
+</div>
+<p>The soft reset moved my master branch (and <code class="docutils literal notranslate"><span class="pre">HEAD</span></code>) back to the cake commit, leaving both the index and working directory untouched. This is a cool trick you can use to “squash” multiple commits into one. If we were to add and commit all files at this point, we would have effectively replaced the two commits about dresses with just one new one.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ls
+cake.txt<span class="w">  </span>readme.md<span class="w">  </span>the-dress-is-white.txt<span class="w">  </span>vectors_ftw.R
+
+$<span class="w"> </span>git<span class="w"> </span>status
+On<span class="w"> </span>branch<span class="w"> </span>master
+
+Changes<span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span>committed:
+<span class="w">  </span><span class="o">(</span>use<span class="w"> </span><span class="s2">&quot;git restore --staged &lt;file&gt;...&quot;</span><span class="w"> </span>to<span class="w"> </span>unstage<span class="o">)</span>
+<span class="w">        </span>new<span class="w"> </span>file:<span class="w">   </span>the-dress-is-white.txt
+</pre></div>
+</div>
+<p>A mixed reset will also unstage the file from the index, but leave it in the working directory. Since <code class="docutils literal notranslate"><span class="pre">HEAD</span></code> was already moved, we no longer need to provide the commit ID (default value is <code class="docutils literal notranslate"><span class="pre">HEAD</span></code>.)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>reset<span class="w"> </span>--mixed
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ls
+cake.txt<span class="w">  </span>readme.md<span class="w">  </span>the-dress-is-white.txt<span class="w">  </span>vectors_ftw.R
+
+$<span class="w"> </span>git<span class="w"> </span>status
+On<span class="w"> </span>branch<span class="w"> </span>master
+
+Untracked<span class="w"> </span>files:
+<span class="w">  </span><span class="o">(</span>use<span class="w"> </span><span class="s2">&quot;git add &lt;file&gt;...&quot;</span><span class="w"> </span>to<span class="w"> </span>include<span class="w"> </span><span class="k">in</span><span class="w"> </span>what<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>committed<span class="o">)</span>
+<span class="w">        </span>the-dress-is-white.txt
+
+nothing<span class="w"> </span>added<span class="w"> </span>to<span class="w"> </span>commit<span class="w"> </span>but<span class="w"> </span>untracked<span class="w"> </span>files<span class="w"> </span>present<span class="w"> </span><span class="o">(</span>use<span class="w"> </span><span class="s2">&quot;git add&quot;</span><span class="w"> </span>to<span class="w"> </span>track<span class="o">)</span>
+</pre></div>
+</div>
+<p>Finally, a hard reset will (usually) also clean our working directory, but not in this particular case because the file is still untracked.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>reset<span class="w"> </span>--hard
+HEAD<span class="w"> </span>is<span class="w"> </span>now<span class="w"> </span>at<span class="w"> </span>94af264<span class="w"> </span>Add<span class="w"> </span>cake<span class="w"> </span>declaration
+
+$<span class="w"> </span>ls
+cake.txt<span class="w">  </span>readme.md<span class="w">  </span>the-dress-is-white.txt<span class="w">  </span>vectors_ftw.R
+</pre></div>
+</div>
+<p>Committing it and then resetting does work. Note that I am using the syntax <code class="docutils literal notranslate"><span class="pre">HEAD^</span></code> to refer to the previous commit. More information on this revision syntax can be found at the end of this workshop.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git add the-dress-is-white.txt
+$ git commit -m &quot;Track dress file&quot;
+[master a40c9f9] Track dress file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 the-dress-is-white.txt
+$ git reset --hard HEAD^
+HEAD is now at 94af264 Add cake declaration
+$ ls
+cake.txt  readme.md  vectors_ftw.R
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Always be <em>extremely careful</em> when rewriting history, either via <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">--amend</span></code>, <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">rebase</span></code> or <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span> <span class="pre">--hard</span></code>. As we will see later, rewriting history changes the commit ids, which are essentially hashes of file contents, messages and timestamps. If you already pushed your changes to a remote repository, especially when it is a shared repo that others might have pulled from in the meantime, and you alter your local history, the two git repos will become incompatible.</p>
+<p>However, as long as you do not <code class="docutils literal notranslate"><span class="pre">push</span> <span class="pre">--force</span></code> your local changes to the remote, you should always be able to restore any mistakes. And there might even be cases when <em>forcefully pushing</em> is the right thing to do, i.e. when it is a private branch only you are working on. You can check out <a class="reference external" href="https://git-scm.com/book/en/v2/Git-Branching-Rebasing#_rebase_peril">The Perils of Rebasing</a> in the Pro Git book for more info.</p>
+<p><strong>TL;DR: never <code class="docutils literal notranslate"><span class="pre">--amend</span></code> or <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span> <span class="pre">--hard</span></code> a commit that was already pushed to (a shared branch of a) remote repository.</strong></p>
+</div>
+<hr class="docutils" />
+<p>We’ve now seen how to use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span></code> to undo commits, but as we mentioned in the section on <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">restore</span></code>, it can also be used on files to unstage files from the index (or more accurately, to reset the indexed file to a particular commit or usually <code class="docutils literal notranslate"><span class="pre">HEAD</span></code>). Intuitively (?), “resetting” files to an older state based on a particular commit used to be handled by <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span></code> (see next section). That is why, since the introduction of the new <code class="docutils literal notranslate"><span class="pre">switch</span></code> command in git v2.23, it is more convenient to use the dedicated <code class="docutils literal notranslate"><span class="pre">restore</span></code> command (for both index and work directory changes) and to reserve <code class="docutils literal notranslate"><span class="pre">reset</span></code> for dealing with the commit-level.</p>
+<p>In any case, when <code class="docutils literal notranslate"><span class="pre">reset</span></code> is applied to a filepath instead of a commit, it always operates in <code class="docutils literal notranslate"><span class="pre">--mixed</span></code> mode <em>and</em> it does not move around what <code class="docutils literal notranslate"><span class="pre">HEAD</span></code> is pointing. Consequently, a command like <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span> <span class="pre">file.txt</span></code> will effectively unstage files (by staging the file as it was in the commit that <code class="docutils literal notranslate"><span class="pre">HEAD</span></code> points to) and this is the help message that <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> used to show before the introduction of <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">restore</span> <span class="pre">--staged</span></code>. <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span> <span class="pre">&lt;commit&gt;</span> <span class="pre">--</span> <span class="pre">file.txt</span></code> would stage the file as it was in a particular commit.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://git-scm.com/book/en/v2/Git-Tools-Reset-Demystified">https://git-scm.com/book/en/v2/Git-Tools-Reset-Demystified</a></p></li>
+<li><p><a class="reference external" href="https://www.atlassian.com/git/tutorials/undoing-changes/git-reset">https://www.atlassian.com/git/tutorials/undoing-changes/git-reset</a></p></li>
+</ul>
+</div>
+</section>
+<section id="jumping-around">
+<h2><span class="section-number">3.4. </span>Jumping around<a class="headerlink" href="#jumping-around" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span></code> is a rather confusing command on its own, because it can do so many different things. That is why two new commands were introduced, <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">restore</span></code> and <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">switch</span></code> (see next section on branches) to separate out some of its actions and make the similarities to <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span></code> more clear.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">&lt;branch&gt;</span></code> will behave similar to <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span> <span class="pre">--hard</span></code>, by changing both the index and working directory, but unlike <code class="docutils literal notranslate"><span class="pre">reset</span></code> it actually moves <code class="docutils literal notranslate"><span class="pre">HEAD</span></code>, and not the underlying branch that it points to. It’s therefor a safe and reversible operation that can be used to jump around. However, for simplicity, the dedicated <code class="docutils literal notranslate"><span class="pre">switch</span></code> command can now take over this role (see next section).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">&lt;commit&gt;</span></code> is similar, but it will make <code class="docutils literal notranslate"><span class="pre">HEAD</span></code> point to a specific commit. This <em>detached head</em> state can be dangerous, because it introduces dangling commits unreferenced by a branch. This can be used for quickly checking something out, but new commits shouldn’t be created on top of this state. See <a class="reference external" href="https://git-scm.com/docs/git-checkout#_detached_head">https://git-scm.com/docs/git-checkout#_detached_head</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">(&lt;commit&gt;)</span> <span class="pre">--</span> <span class="pre">file.txt</span></code> is the more dangerous version of <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span> <span class="pre">(&lt;commit&gt;)</span> <span class="pre">file.txt</span></code>, in the sense that it resets both the index and the working directory, i.e. it is not workdir safe. As before, the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">restore</span></code> command should probably be preferred for simplicity.</p></li>
+</ul>
+<figure class="align-center" id="fig-reset-checkout-target">
+<img alt="" src="../_images/reset-checkout.png" />
+<figcaption>
+<p><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span></code> versus <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span></code> when operating on branches.
+Source: <a class="reference external" href="https://git-scm.com/book/en/v2/Git-Tools-Reset-Demystified">https://git-scm.com/book/en/v2/Git-Tools-Reset-Demystified</a></span><a class="headerlink" href="#fig-reset-checkout-target" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-6" name="sd-tab-set-3" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-6">
+Exercise</label><div class="sd-tab-content docutils">
+<div class="hint admonition">
+<p class="admonition-title">Instructions</p>
+<ul class="simple">
+<li><p>Checkout out an older commits by finding its id in the log.</p></li>
+<li><p>Notice how the index and work dir change.</p></li>
+<li><p>Check the git status message.</p></li>
+<li><p>Revert back to your previous branch (<strong>not just the most recent commit id</strong>).</p></li>
+</ul>
+</div>
+</div>
+<input id="sd-tab-item-7" name="sd-tab-set-3" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-7">
+Solution</label><div class="sd-tab-content docutils">
+<p>After checking out an older commit, git will show you a similar message to this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>b2c2e84
+Note:<span class="w"> </span>switching<span class="w"> </span>to<span class="w"> </span><span class="s1">&#39;b2c2e84&#39;</span>.
+
+You<span class="w"> </span>are<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s1">&#39;detached HEAD&#39;</span><span class="w"> </span>state.<span class="w"> </span>You<span class="w"> </span>can<span class="w"> </span>look<span class="w"> </span>around,<span class="w"> </span>make<span class="w"> </span>experimental
+changes<span class="w"> </span>and<span class="w"> </span>commit<span class="w"> </span>them,<span class="w"> </span>and<span class="w"> </span>you<span class="w"> </span>can<span class="w"> </span>discard<span class="w"> </span>any<span class="w"> </span>commits<span class="w"> </span>you<span class="w"> </span>make<span class="w"> </span><span class="k">in</span><span class="w"> </span>this
+state<span class="w"> </span>without<span class="w"> </span>impacting<span class="w"> </span>any<span class="w"> </span>branches<span class="w"> </span>by<span class="w"> </span>switching<span class="w"> </span>back<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>branch.
+
+If<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span>create<span class="w"> </span>a<span class="w"> </span>new<span class="w"> </span>branch<span class="w"> </span>to<span class="w"> </span>retain<span class="w"> </span>commits<span class="w"> </span>you<span class="w"> </span>create,<span class="w"> </span>you<span class="w"> </span>may
+<span class="k">do</span><span class="w"> </span>so<span class="w"> </span><span class="o">(</span>now<span class="w"> </span>or<span class="w"> </span>later<span class="o">)</span><span class="w"> </span>by<span class="w"> </span>using<span class="w"> </span>-c<span class="w"> </span>with<span class="w"> </span>the<span class="w"> </span>switch<span class="w"> </span>command.<span class="w"> </span>Example:
+
+<span class="w">  </span>git<span class="w"> </span>switch<span class="w"> </span>-c<span class="w"> </span>&lt;new-branch-name&gt;
+
+Or<span class="w"> </span>undo<span class="w"> </span>this<span class="w"> </span>operation<span class="w"> </span>with:
+
+<span class="w">  </span>git<span class="w"> </span>switch<span class="w"> </span>-
+
+Turn<span class="w"> </span>off<span class="w"> </span>this<span class="w"> </span>advice<span class="w"> </span>by<span class="w"> </span>setting<span class="w"> </span>config<span class="w"> </span>variable<span class="w"> </span>advice.detachedHead<span class="w"> </span>to<span class="w"> </span><span class="nb">false</span>
+
+HEAD<span class="w"> </span>is<span class="w"> </span>now<span class="w"> </span>at<span class="w"> </span>b2c2e84<span class="w"> </span>Create<span class="w"> </span>a<span class="w"> </span>vector
+</pre></div>
+</div>
+<p>We can revert back to the normal state via <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">master</span></code>.</p>
+</div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>https://www.atlassian.com/git/tutorials/resetting-checking-out-and-reverting</p></li>
+<li><p>Long, but insightful read on the differences between <code class="docutils literal notranslate"><span class="pre">checkout</span></code>, <code class="docutils literal notranslate"><span class="pre">reset</span></code>, <code class="docutils literal notranslate"><span class="pre">switch</span></code> and <code class="docutils literal notranslate"><span class="pre">restore</span></code>: <a class="reference external" href="https://stackoverflow.com/a/66309040">https://stackoverflow.com/a/66309040</a>.</p></li>
+<li><p>A nice overview table of the safe and unsafe versions of <code class="docutils literal notranslate"><span class="pre">checkout</span></code> and <code class="docutils literal notranslate"><span class="pre">reset</span></code> can be found at the bottom of this page: <a class="reference external" href="https://git-scm.com/book/en/v2/Git-Tools-Reset-Demystified">https://git-scm.com/book/en/v2/Git-Tools-Reset-Demystified</a>.</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="4-remotes.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">4. </span>Working with remotes</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="2-revising-the-basics.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">2. </span>Revising the basics</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Pieter Moris
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">3. Rewriting history (lite edition)</a><ul>
+<li><a class="reference internal" href="#altering-the-most-recent-commit">3.1. Altering the most recent commit</a></li>
+<li><a class="reference internal" href="#uncommitted-whoopsies">3.2. Uncommitted whoopsies</a></li>
+<li><a class="reference internal" href="#committed-whoopsies">3.3. Committed whoopsies</a></li>
+<li><a class="reference internal" href="#jumping-around">3.4. Jumping around</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    </body>
+</html>

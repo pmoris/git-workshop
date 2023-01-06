@@ -1,0 +1,988 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="6. Collaboration" href="6-collaboration.html" /><link rel="prev" title="4. Working with remotes" href="4-remotes.html" />
+
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+        <title>5. Branching - Workshop: git collaboration</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --color-brand-primary: #336B65;
+  --color-brand-content: #336B65;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #99B5B2;
+  --color-brand-content: #66908B;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #99B5B2;
+  --color-brand-content: #66908B;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Workshop: git collaboration</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  
+  <span class="sidebar-brand-text">Workshop: git collaboration</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1-brief-summary.html">1. A brief summary of git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-revising-the-basics.html">2. Revising the basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-rewriting-history.html">3. Rewriting history (lite edition)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-remotes.html">4. Working with remotes</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">5. Branching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-collaboration.html">6. Collaboration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-what-is-next.html">7. What is next?</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="branching">
+<h1><span class="section-number">5. </span>Branching<a class="headerlink" href="#branching" title="Link to this heading">#</a></h1>
+<p>This section will teach you the basics of working with branches, which are another very neat feature for collaborating with git.</p>
+<hr class="docutils" />
+<p>As we discussed earlier, git branches are just references to particular commits (<a class="reference internal" href="1-brief-summary.html#fig-branch-target"><span class="std std-ref">see image in introduction</span></a>). Consequently, multiple branches can point to the same commit, branches can be ahead of others, or they can be on separate “tracks” of the commit history graph.</p>
+<p>Similarly, remote branches, denoted by <code class="docutils literal notranslate"><span class="pre">&lt;remote&gt;/&lt;branch&gt;</span></code>, are also just pointers. They show you which commits the branches in your remote repository were pointing to, the last time you communicated with that remote (via <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">fetch</span></code> or <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code>), more or less acting like bookmarks.</p>
+<p>Lastly, keep in mind that these remote branches do not necessarily need to have the same name as your local branches, although it is recommended that they do. E.g. a local branch <code class="docutils literal notranslate"><span class="pre">dev</span></code> should be setup to track a remote branch named <code class="docutils literal notranslate"><span class="pre">origin/dev</span></code>, but it could point to <code class="docutils literal notranslate"><span class="pre">origin/master</span></code> as well if you feel like messing with people (don’t do this, please).</p>
+<p>Why would we want to use branches in the first place though? Well, they allow for more granular control of changes and make it easier to work on separate features independently. Here is a great example borrowed from the Git Pro book:</p>
+<blockquote>
+<div><p>Let’s go through a simple example of branching and merging with a workflow that you might use in the real world. You’ll follow these steps:</p>
+<ul class="simple">
+<li><p>Do some work on a website.</p></li>
+<li><p>Create a branch for a new user story you’re working on.</p></li>
+<li><p>Do some work in that branch.</p></li>
+</ul>
+<p>At this stage, you’ll receive a call that another issue is critical and you need a hotfix. You’ll do the following:</p>
+<ul class="simple">
+<li><p>Switch to your production branch.</p></li>
+<li><p>Create a branch to add the hotfix.</p></li>
+<li><p>After it’s tested, merge the hotfix branch, and push to production.</p></li>
+<li><p>Switch back to your original user story and continue working.</p></li>
+</ul>
+</div></blockquote>
+<p>In the workshop we will introduce some of the basic branching commands that you might need. Afterwards we will walk through a few different scenarios of how they can be used to collaborate.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>More in-depth information on branching can be found in these excellent resources:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell">https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell</a></p></li>
+<li><p><a class="reference external" href="https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging">https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging</a></p></li>
+<li><p><a class="reference external" href="https://git-scm.com/book/en/v2/Git-Branching-Remote-Branches">https://git-scm.com/book/en/v2/Git-Branching-Remote-Branches</a></p></li>
+<li><p><a class="reference external" href="https://www.atlassian.com/git/tutorials/using-branches">https://www.atlassian.com/git/tutorials/using-branches</a></p></li>
+</ul>
+</div>
+<section id="creating-a-new-branch">
+<h2><span class="section-number">5.1. </span>Creating a new branch<a class="headerlink" href="#creating-a-new-branch" title="Link to this heading">#</a></h2>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-0">
+Exercise</label><div class="sd-tab-content docutils">
+<div class="hint admonition">
+<p class="admonition-title">Instructions</p>
+<ul class="simple">
+<li><p>Create a new feature branch and switch to it.</p></li>
+<li><p>Create or modify files and commit them.</p></li>
+</ul>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-1">
+Solution</label><div class="sd-tab-content docutils">
+<p>There are a couple of different ways to create branches:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">&lt;branch-name&gt;</span> <span class="pre">&lt;start-point&gt;</span></code> simply creates a new branch, without switching to it. (HEAD is used as a starting point by default)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">switch</span> <span class="pre">-c</span> <span class="pre">&lt;new-branch&gt;</span> <span class="pre">&lt;start-point&gt;</span></code>: creates a new branch and switches to it.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">-b</span> <span class="pre">&lt;branch-name&gt;</span></code> creates a new branch and immediately switches (<code class="docutils literal notranslate"><span class="pre">checkout</span></code>) to it (replaced by <code class="docutils literal notranslate"><span class="pre">switch</span></code>).</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">switch</span></code> command was introduced in git v2.23 and it offers a more streamlined and safer alternative to <code class="docutils literal notranslate"><span class="pre">checkout</span></code>, which serves multiple different purposes:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.git-tower.com/learn/git/commands/git-switch">https://www.git-tower.com/learn/git/commands/git-switch</a></p></li>
+<li><p><a class="reference external" href="https://stackoverflow.com/questions/57265785/whats-the-difference-between-git-switch-and-git-checkout-branch">https://stackoverflow.com/questions/57265785/whats-the-difference-between-git-switch-and-git-checkout-branch</a></p></li>
+<li><p><a class="reference external" href="https://stackoverflow.com/a/66309040">https://stackoverflow.com/a/66309040</a></p></li>
+</ul>
+<p>In a nutshell, avoid using <code class="docutils literal notranslate"><span class="pre">checkout</span></code> if you are new to git, since it servers multiple different purposes. Instead, use <code class="docutils literal notranslate"><span class="pre">switch</span></code> to safely switch between branches (or commits) (which <code class="docutils literal notranslate"><span class="pre">checkout</span></code> could also do). Use <code class="docutils literal notranslate"><span class="pre">restore</span></code> when attempting to reset files in your working directory and/or index (which <code class="docutils literal notranslate"><span class="pre">checkout</span></code> and <code class="docutils literal notranslate"><span class="pre">reset</span></code> could also do).</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>switch<span class="w"> </span>-c<span class="w"> </span>things
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;raindrops on roses and whiskers on kittens&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>my-favorite-things.txt
+git<span class="w"> </span>add<span class="w"> </span>-A
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;List favorite things&quot;</span>
+cat<span class="w"> </span>&gt;&gt;<span class="w"> </span>my-favorite-things.txt<span class="w"> </span><span class="s">&lt;&lt;EOL</span>
+<span class="s">- https://i.imgur.com/xDfo0.gif</span>
+<span class="s">- https://i.imgur.com/XX6ZxA7.mp4</span>
+<span class="s">EOL</span>
+git<span class="w"> </span>add<span class="w"> </span>my-favorite-things.txt
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Add more favorite things&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="moving-between-branches">
+<h2><span class="section-number">5.2. </span>Moving between branches<a class="headerlink" href="#moving-between-branches" title="Link to this heading">#</a></h2>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-2" name="sd-tab-set-1" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-2">
+Exercise</label><div class="sd-tab-content docutils">
+<div class="hint admonition">
+<p class="admonition-title">Instructions</p>
+<ul class="simple">
+<li><p>List all branches in your repository.</p></li>
+<li><p>Switch between different branches and see how the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code> changes.</p></li>
+<li><p>Try switching between branches when there are uncommitted changes.</p></li>
+</ul>
+</div>
+</div>
+<input id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-3">
+Solution</label><div class="sd-tab-content docutils">
+<p>To list the existing branches in your repository, you can use the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>branch<span class="w"> </span>-vv
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">-vv</span></code> flag is optional, but it comes with the bonus of showing the most recent commit on that branch (or more accurately, the commit that that branch is pointing to), as well as listing any remote tracked branches between brackets.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>branch<span class="w"> </span>-vv
+<span class="w">  </span>master<span class="w"> </span>94af264<span class="w"> </span><span class="o">[</span>origin/master<span class="o">]</span><span class="w"> </span>Add<span class="w"> </span>cake<span class="w"> </span>declaration
+*<span class="w"> </span>things<span class="w"> </span>1dfd056<span class="w"> </span>Add<span class="w"> </span>more<span class="w"> </span>favorite<span class="w"> </span>things
+</pre></div>
+</div>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code> to review some of the things we have discussed earlier. Git uses a history of commits that point to one another. Branches are pointers to specific commits, in our case <code class="docutils literal notranslate"><span class="pre">things</span></code> and <code class="docutils literal notranslate"><span class="pre">master</span></code> have diverged and they point to different snapshots (<code class="docutils literal notranslate"><span class="pre">things</span></code> has additional newer commits compared to <code class="docutils literal notranslate"><span class="pre">master</span></code>). <code class="docutils literal notranslate"><span class="pre">HEAD</span></code> points to the branch (or commit) that is currently checked out (i.e. it produces the initial contents of your working directory and provides a frame of reference to compare against when introducing new changes).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>log
+commit<span class="w"> </span>1dfd056e7db978c24cdeaae8ee44b5b3aa2498f3<span class="w"> </span><span class="o">(</span>HEAD<span class="w"> </span>-&gt;<span class="w"> </span>things<span class="o">)</span>
+Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+Date:<span class="w">   </span>Mon<span class="w"> </span>Oct<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">15</span>:06:10<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+
+<span class="w">    </span>Add<span class="w"> </span>more<span class="w"> </span>favorite<span class="w"> </span>things
+
+commit<span class="w"> </span>6b5733bc18080a8f5c0c2a5601f35dbad1edae01
+Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+Date:<span class="w">   </span>Fri<span class="w"> </span>Sep<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="m">16</span>:21:07<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+
+<span class="w">    </span>List<span class="w"> </span>beautiful<span class="w"> </span>things
+
+commit<span class="w"> </span>94af264c0ec9e4560d23c8bbacbb4370b9e20b65<span class="w"> </span><span class="o">(</span>origin/master,<span class="w"> </span>new,<span class="w"> </span>master<span class="o">)</span>
+Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+Date:<span class="w">   </span>Wed<span class="w"> </span>Sep<span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">15</span>:48:49<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+
+<span class="w">    </span>Add<span class="w"> </span>cake<span class="w"> </span>declaration
+
+commit<span class="w"> </span>b2c2e84a1c0deebd6199e790f0db133fc0e0853c
+Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+Date:<span class="w">   </span>Wed<span class="w"> </span>Aug<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">12</span>:30:36<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+
+<span class="w">    </span>Create<span class="w"> </span>a<span class="w"> </span>vector
+
+<span class="w">    </span>Adds<span class="w"> </span>an<span class="w"> </span>R<span class="w"> </span>script<span class="w"> </span>to<span class="w"> </span>create<span class="w"> </span>a<span class="w"> </span>nifty<span class="w"> </span>vector
+<span class="w">    </span>and<span class="w"> </span>talks<span class="w"> </span>about<span class="w"> </span>it<span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>readme.
+
+...
+</pre></div>
+</div>
+<p>When we <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">switch</span> <span class="pre">master</span></code> and call <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code> again, we can see that <code class="docutils literal notranslate"><span class="pre">HEAD</span></code> moves around. Additionally, the log will only show you info that it deems relevant. After switching to <code class="docutils literal notranslate"><span class="pre">master</span></code>, it will only show you commits that are below it. You can use the <code class="docutils literal notranslate"><span class="pre">--all</span></code> flag to change this.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>switch<span class="w"> </span>master
+git<span class="w"> </span>log
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>switch<span class="w"> </span>master
+Switched<span class="w"> </span>to<span class="w"> </span>branch<span class="w"> </span><span class="s1">&#39;master&#39;</span>
+Your<span class="w"> </span>branch<span class="w"> </span>is<span class="w"> </span>up<span class="w"> </span>to<span class="w"> </span>date<span class="w"> </span>with<span class="w"> </span><span class="s1">&#39;origin/master&#39;</span>.
+
+$<span class="w"> </span>git<span class="w"> </span>log
+commit<span class="w"> </span>94af264c0ec9e4560d23c8bbacbb4370b9e20b65<span class="w"> </span><span class="o">(</span>HEAD<span class="w"> </span>-&gt;<span class="w"> </span>master,<span class="w"> </span>origin/master,<span class="w"> </span>new<span class="o">)</span>
+Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+Date:<span class="w">   </span>Wed<span class="w"> </span>Sep<span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">15</span>:48:49<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+
+<span class="w">    </span>Add<span class="w"> </span>cake<span class="w"> </span>declaration
+
+commit<span class="w"> </span>b2c2e84a1c0deebd6199e790f0db133fc0e0853c
+Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+Date:<span class="w">   </span>Wed<span class="w"> </span>Aug<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">12</span>:30:36<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+
+<span class="w">    </span>Create<span class="w"> </span>a<span class="w"> </span>vector
+
+<span class="w">    </span>Adds<span class="w"> </span>an<span class="w"> </span>R<span class="w"> </span>script<span class="w"> </span>to<span class="w"> </span>create<span class="w"> </span>a<span class="w"> </span>nifty<span class="w"> </span>vector
+<span class="w">    </span>and<span class="w"> </span>talks<span class="w"> </span>about<span class="w"> </span>it<span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>readme.
+
+commit<span class="w"> </span>02b6530617bd305f686df19fbbaac4689f5e5cf1
+Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+Date:<span class="w">   </span>Wed<span class="w"> </span>Aug<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">12</span>:19:18<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+
+<span class="w">    </span>Initial<span class="w"> </span>commit
+</pre></div>
+</div>
+<p>Lastly, attempting to switch between branches when there are uncommitted or staged changes, will result in a warning:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;- https://www.youtube.com/watch?v=3GRSbr0EYYU&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>my-favorite-things.txt
+git<span class="w"> </span>switch<span class="w"> </span>master
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>error:<span class="w"> </span>Your<span class="w"> </span><span class="nb">local</span><span class="w"> </span>changes<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>following<span class="w"> </span>files<span class="w"> </span>would<span class="w"> </span>be<span class="w"> </span>overwritten<span class="w"> </span>by<span class="w"> </span>checkout:
+<span class="w">        </span>my-favorite-things.txt
+Please<span class="w"> </span>commit<span class="w"> </span>your<span class="w"> </span>changes<span class="w"> </span>or<span class="w"> </span>stash<span class="w"> </span>them<span class="w"> </span>before<span class="w"> </span>you<span class="w"> </span>switch<span class="w"> </span>branches.
+Aborting
+</pre></div>
+</div>
+<p>You can fix this by either staging and committing your changes, restoring the file to its previous state, or by using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">stash</span></code>. The latter option is incredibly useful and I highly suggest you to learn more about it. It will make your life so much easier.</p>
+</div>
+</div>
+</section>
+<section id="merging-a-branch">
+<h2><span class="section-number">5.3. </span>Merging a branch<a class="headerlink" href="#merging-a-branch" title="Link to this heading">#</a></h2>
+<p>At some point, you will want to merge your branches back together. There is a lot of discussion on the how and when of properly merging branches. These branching strategies are given fancy names like <em>git flow</em> and <em>trunk based development</em>, but we will not delve into them at this point. Instead, we will focus on the more simple situation where we have 1 main branch (<code class="docutils literal notranslate"><span class="pre">master</span></code> or <code class="docutils literal notranslate"><span class="pre">main</span></code>) and several smaller feature branches.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-4" name="sd-tab-set-2" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-4">
+Exercise</label><div class="sd-tab-content docutils">
+<div class="hint admonition">
+<p class="admonition-title">Instructions</p>
+<ul class="simple">
+<li><p>Compare the differences between the two branches.</p></li>
+<li><p>Merge your feature branch into <code class="docutils literal notranslate"><span class="pre">master</span></code>.</p></li>
+<li><p>Check the git log again and use the <code class="docutils literal notranslate"><span class="pre">--graph</span></code> flag to get a better feel for the acyclic graph that makes up the git history.</p></li>
+</ul>
+</div>
+</div>
+<input id="sd-tab-item-5" name="sd-tab-set-2" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-5">
+Solution</label><div class="sd-tab-content docutils">
+<p>We can use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">diff</span></code> to compare all the changes between the two branches:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>diff<span class="w"> </span>things<span class="w"> </span>master
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>diff<span class="w"> </span>--git<span class="w"> </span>a/my-favorite-things.txt<span class="w"> </span>b/my-favorite-things.txt
+deleted<span class="w"> </span>file<span class="w"> </span>mode<span class="w"> </span><span class="m">100644</span>
+index<span class="w"> </span>e61b78b..0000000
+---<span class="w"> </span>a/my-favorite-things.txt
++++<span class="w"> </span>/dev/null
+@@<span class="w"> </span>-1,3<span class="w"> </span>+0,0<span class="w"> </span>@@
+-raindrops<span class="w"> </span>on<span class="w"> </span>roses<span class="w"> </span>and<span class="w"> </span>whiskers<span class="w"> </span>on<span class="w"> </span>kittens
+--<span class="w"> </span>https://i.imgur.com/xDfo0.gif
+--<span class="w"> </span>https://i.imgur.com/XX6ZxA7.mp4
+</pre></div>
+</div>
+<p>To merge our changes into the master branch, we first <code class="docutils literal notranslate"><span class="pre">switch</span></code> to it and then call <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">merge</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>switch<span class="w"> </span>master
+git<span class="w"> </span>merge<span class="w"> </span>things
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Updating<span class="w"> </span>94af264..1dfd056
+Fast-forward
+<span class="w"> </span>my-favorite-things.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">3</span><span class="w"> </span>+++
+<span class="w"> </span><span class="m">1</span><span class="w"> </span>file<span class="w"> </span>changed,<span class="w"> </span><span class="m">3</span><span class="w"> </span>insertions<span class="o">(</span>+<span class="o">)</span>
+<span class="w"> </span>create<span class="w"> </span>mode<span class="w"> </span><span class="m">100644</span><span class="w"> </span>my-favorite-things.txt
+</pre></div>
+</div>
+<p>Now the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code> will show us that both branches have landed on the same commit, i.e. the changes introduced in the <code class="docutils literal notranslate"><span class="pre">things</span></code> branch are now part of <code class="docutils literal notranslate"><span class="pre">master</span></code> too. In fact, only <code class="docutils literal notranslate"><span class="pre">master</span></code> moved around though, the <code class="docutils literal notranslate"><span class="pre">things</span></code> branch stayed put.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>log
+commit<span class="w"> </span>1dfd056e7db978c24cdeaae8ee44b5b3aa2498f3<span class="w"> </span><span class="o">(</span>HEAD<span class="w"> </span>-&gt;<span class="w"> </span>master,<span class="w"> </span>things<span class="o">)</span>
+Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+Date:<span class="w">   </span>Mon<span class="w"> </span>Oct<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">15</span>:06:10<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+
+<span class="w">    </span>Add<span class="w"> </span>more<span class="w"> </span>favorite<span class="w"> </span>things
+
+commit<span class="w"> </span>6b5733bc18080a8f5c0c2a5601f35dbad1edae01
+Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+Date:<span class="w">   </span>Fri<span class="w"> </span>Sep<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="m">16</span>:21:07<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+
+<span class="w">    </span>List<span class="w"> </span>beautiful<span class="w"> </span>things
+
+commit<span class="w"> </span>94af264c0ec9e4560d23c8bbacbb4370b9e20b65<span class="w"> </span><span class="o">(</span>origin/master,<span class="w"> </span>borked/new<span class="o">)</span>
+Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+Date:<span class="w">   </span>Wed<span class="w"> </span>Sep<span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">15</span>:48:49<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+
+<span class="w">    </span>Add<span class="w"> </span>cake<span class="w"> </span>declaration
+</pre></div>
+</div>
+<p>Observe that the remote-tracking branches (<code class="docutils literal notranslate"><span class="pre">origin/master</span></code>) are still pointing to one of the older commits, because we have not pushed our changes to the remote yet.</p>
+</div>
+</div>
+<p>Did you notice that message about fast-fowarding after merging? To understand what this means and why it happens, we need to look more closely at the graph that makes up git’s revision history.</p>
+<p>Before merging, the history looks similar to this:</p>
+<figure class="align-center" id="fig-branchbeforemerge-target">
+<img alt="" src="../_images/branch-before-merge.png" />
+<figcaption>
+<p><span class="caption-text">Git history before merging <code class="docutils literal notranslate"><span class="pre">things</span></code> branch into <code class="docutils literal notranslate"><span class="pre">master</span></code></span><a class="headerlink" href="#fig-branchbeforemerge-target" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>As you can see, the additional commit <code class="docutils literal notranslate"><span class="pre">f</span></code> on the <code class="docutils literal notranslate"><span class="pre">things</span></code> branch form a linear history on top of the commit history that <code class="docutils literal notranslate"><span class="pre">master</span></code> has. Thus, the merge between the two branches can be performed by simply moving the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch ahead to the next commit <code class="docutils literal notranslate"><span class="pre">f</span></code>. Afterwards, both branches will be identical in terms of their commit history.</p>
+<figure class="align-center" id="fig-branchafterffmerge-target">
+<img alt="" src="../_images/branch-after-ff-merge.png" />
+<figcaption>
+<p><span class="caption-text">Git history after merging <code class="docutils literal notranslate"><span class="pre">things</span></code> branch into <code class="docutils literal notranslate"><span class="pre">master</span></code> via fast-foward.</span><a class="headerlink" href="#fig-branchafterffmerge-target" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>If we had used the <code class="docutils literal notranslate"><span class="pre">--no-ff</span></code> flag when merging, an additional <em>merge commit</em> would have been created. This commit would have as its parents the latest commit of each of the two branches, as shown below.</p>
+<figure class="align-center" id="fig-branchafternoffmerge-target">
+<img alt="" src="../_images/branch-after-noff-merge.png" />
+<figcaption>
+<p><span class="caption-text">Git history after merging <code class="docutils literal notranslate"><span class="pre">things</span></code> branch into <code class="docutils literal notranslate"><span class="pre">master</span></code> without fast-fowarding. Commit <code class="docutils literal notranslate"><span class="pre">g</span></code> is called a <em>merge commit</em> and it refers to commit <code class="docutils literal notranslate"><span class="pre">f</span></code> as well as commit <code class="docutils literal notranslate"><span class="pre">e</span></code>, which were the commits that the two branches were pointing to respectively.</span><a class="headerlink" href="#fig-branchafternoffmerge-target" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Try it out for yourself!</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-6" name="sd-tab-set-3" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-6">
+Exercise</label><div class="sd-tab-content docutils">
+<div class="hint admonition">
+<p class="admonition-title">Instructions</p>
+<ul class="simple">
+<li><p>Reset your repository to the way it was before the merge.</p></li>
+<li><p>Merge your feature branch into master without fast forwarding.</p></li>
+<li><p>Check the git log.</p></li>
+</ul>
+</div>
+</div>
+<input id="sd-tab-item-7" name="sd-tab-set-3" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-7">
+Solution</label><div class="sd-tab-content docutils">
+<p>First, check the commit that we need to reset to via <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code>. Or alternatively, because we know what happened in this case, just use <code class="docutils literal notranslate"><span class="pre">HEAD~2</span></code> to jump back exactly 2 commits.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>reset<span class="w"> </span>--hard<span class="w"> </span>94af2
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Because this bears repeating. Do <strong>not</strong> rewrite your git history like this if your changes have already been pushed to a remote repository, unless you are the only person working on the affected branches.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code> shows what we expect now: <code class="docutils literal notranslate"><span class="pre">master</span></code> points to the old commit again and <code class="docutils literal notranslate"><span class="pre">things</span></code> has remained in place.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>log<span class="w"> </span>--all
+commit<span class="w"> </span>1dfd056e7db978c24cdeaae8ee44b5b3aa2498f3<span class="w"> </span><span class="o">(</span>things<span class="o">)</span>
+Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+Date:<span class="w">   </span>Mon<span class="w"> </span>Oct<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">15</span>:06:10<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+
+<span class="w">    </span>Add<span class="w"> </span>more<span class="w"> </span>favorite<span class="w"> </span>things
+
+commit<span class="w"> </span>6b5733bc18080a8f5c0c2a5601f35dbad1edae01
+Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+Date:<span class="w">   </span>Fri<span class="w"> </span>Sep<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="m">16</span>:21:07<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+
+<span class="w">    </span>List<span class="w"> </span>beautiful<span class="w"> </span>things
+
+commit<span class="w"> </span>94af264c0ec9e4560d23c8bbacbb4370b9e20b65<span class="w"> </span><span class="o">(</span>HEAD<span class="w"> </span>-&gt;<span class="w"> </span>master,<span class="w"> </span>origin/master,<span class="w"> </span>borked/new<span class="o">)</span>
+Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+Date:<span class="w">   </span>Wed<span class="w"> </span>Sep<span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">15</span>:48:49<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+
+<span class="w">    </span>Add<span class="w"> </span>cake<span class="w"> </span>declaration
+</pre></div>
+</div>
+<p>Now merge the branches without fast-fowarding.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>merge<span class="w"> </span>--no-ff<span class="w"> </span>things
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Merge<span class="w"> </span>made<span class="w"> </span>by<span class="w"> </span>the<span class="w"> </span><span class="s1">&#39;recursive&#39;</span><span class="w"> </span>strategy.
+<span class="w"> </span>my-favorite-things.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">3</span><span class="w"> </span>+++
+<span class="w"> </span><span class="m">1</span><span class="w"> </span>file<span class="w"> </span>changed,<span class="w"> </span><span class="m">3</span><span class="w"> </span>insertions<span class="o">(</span>+<span class="o">)</span>
+</pre></div>
+</div>
+<p>Now the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code> resembles the structure we saw in the figure above. A new merge commit has been introduced, and that is the commit the branch that we were on while merging now points to. The other branch remains untouched, just as before, and it still points to its most recent commit (<code class="docutils literal notranslate"><span class="pre">Add</span> <span class="pre">more</span> <span class="pre">favorite</span> <span class="pre">things</span></code>).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>log<span class="w"> </span>--graph
+*<span class="w">   </span>commit<span class="w"> </span>bda49b242576a9a8b913ab92d51e8a2794a60ddb<span class="w"> </span><span class="o">(</span>HEAD<span class="w"> </span>-&gt;<span class="w"> </span>master<span class="o">)</span>
+<span class="p">|</span><span class="se">\ </span><span class="w"> </span>Merge:<span class="w"> </span>94af264<span class="w"> </span>1dfd056
+<span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+<span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Date:<span class="w">   </span>Wed<span class="w"> </span>Oct<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">14</span>:42:57<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+<span class="p">|</span><span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w">     </span>Merge<span class="w"> </span>branch<span class="w"> </span><span class="s1">&#39;things&#39;</span>
+<span class="p">|</span><span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span>*<span class="w"> </span>commit<span class="w"> </span>1dfd056e7db978c24cdeaae8ee44b5b3aa2498f3<span class="w"> </span><span class="o">(</span>things<span class="o">)</span>
+<span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+<span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Date:<span class="w">   </span>Mon<span class="w"> </span>Oct<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">15</span>:06:10<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+<span class="p">|</span><span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w">     </span>Add<span class="w"> </span>more<span class="w"> </span>favorite<span class="w"> </span>things
+<span class="p">|</span><span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span>*<span class="w"> </span>commit<span class="w"> </span>6b5733bc18080a8f5c0c2a5601f35dbad1edae01
+<span class="p">|</span>/<span class="w">  </span>Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+<span class="p">|</span><span class="w">   </span>Date:<span class="w">   </span>Fri<span class="w"> </span>Sep<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="m">16</span>:21:07<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+<span class="p">|</span>
+<span class="p">|</span><span class="w">       </span>List<span class="w"> </span>beautiful<span class="w"> </span>things
+<span class="p">|</span>
+*<span class="w"> </span>commit<span class="w"> </span>94af264c0ec9e4560d23c8bbacbb4370b9e20b65<span class="w"> </span><span class="o">(</span>origin/master,<span class="w"> </span>borked/new<span class="o">)</span>
+<span class="p">|</span><span class="w"> </span>Author:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;
+<span class="p">|</span><span class="w"> </span>Date:<span class="w">   </span>Wed<span class="w"> </span>Sep<span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">15</span>:48:49<span class="w"> </span><span class="m">2022</span><span class="w"> </span>+0200
+<span class="p">|</span>
+<span class="p">|</span><span class="w">     </span>Add<span class="w"> </span>cake<span class="w"> </span>declaration
+</pre></div>
+</div>
+</div>
+</div>
+<img alt="fig-merge-platypus" class="bg-primary align-center" src="../_images/merge.png" />
+</section>
+<section id="a-few-short-intermezzos">
+<h2><span class="section-number">5.4. </span>A few short intermezzos<a class="headerlink" href="#a-few-short-intermezzos" title="Link to this heading">#</a></h2>
+<section id="visualising-the-git-graph">
+<h3><span class="section-number">5.4.1. </span>Visualising the git graph<a class="headerlink" href="#visualising-the-git-graph" title="Link to this heading">#</a></h3>
+<p>To save myself the trouble of creating all these images, let’s introduce a few methods to browse the history directly in your terminal. If that doesn’t end up floating your boat, just remember that you can always visualise your git history in a GUI, as well as view it on a remote git server (after pushing your changes at least, more on that later).</p>
+<p>Perhaps you already caught me using the <code class="docutils literal notranslate"><span class="pre">--graph</span></code> option for <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code> in the solution to the previous exercise. In fact, there exist a whole plethora of options to tweak this output.</p>
+<p>A simple yet effective example is the following:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>--abbrev-commit<span class="w"> </span>--all<span class="w"> </span>--graph<span class="w"> </span>--decorate<span class="w"> </span>--color
+</pre></div>
+</div>
+<p>However, many more options exist. Have a look at this SO thread with some suggestions: <a class="reference external" href="https://stackoverflow.com/questions/1838873/visualizing-branch-topology-in-git">https://stackoverflow.com/questions/1838873/visualizing-branch-topology-in-git</a>.</p>
+<p>To save yourself the trouble of remembering all this esoteric syntax, I suggest that you create the following alias in your <code class="docutils literal notranslate"><span class="pre">~/.gitconfig</span></code> file. This is the same file where your username and email ended up while setting up git.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>alias<span class="o">]</span>
+<span class="w">        </span><span class="nv">graph</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>log<span class="w"> </span>--graph<span class="w"> </span>--abbrev-commit<span class="w"> </span>--decorate<span class="w"> </span>--format<span class="o">=</span>format:<span class="s1">&#39;%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n&#39;&#39;          %C(white)%s%C(reset)%n&#39;&#39;          %C(dim white)- %an &lt;%ae&gt; %C(reset) %C(dim white)(committer: %cn &lt;%ce&gt;)%C(reset)&#39;</span>
+</pre></div>
+</div>
+<p>Now you will be able to produce these very fancy history logs when you type <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">graph</span></code> (the colours get lost when copied to this document unfortunately).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>graph
+*<span class="w">   </span>bda49b2<span class="w"> </span>-<span class="w"> </span>Wed,<span class="w"> </span><span class="m">5</span><span class="w"> </span>Oct<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">14</span>:42:57<span class="w"> </span>+0200<span class="w"> </span><span class="o">(</span><span class="m">11</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="o">)</span><span class="w"> </span><span class="o">(</span>committed:<span class="w"> </span>Wed,<span class="w"> </span><span class="m">5</span><span class="w"> </span>Oct<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">14</span>:42:57<span class="w"> </span>+0200<span class="o">)</span><span class="w">  </span><span class="o">(</span>HEAD<span class="w"> </span>-&gt;<span class="w"> </span>master<span class="o">)</span>
+<span class="p">|</span><span class="se">\ </span><span class="w">           </span>Merge<span class="w"> </span>branch<span class="w"> </span><span class="s1">&#39;things&#39;</span>
+<span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w">           </span>-<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="w">  </span><span class="o">(</span>committer:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="o">)</span>
+<span class="p">|</span><span class="w"> </span>*<span class="w"> </span>1dfd056<span class="w"> </span>-<span class="w"> </span>Mon,<span class="w"> </span><span class="m">3</span><span class="w"> </span>Oct<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">15</span>:06:10<span class="w"> </span>+0200<span class="w"> </span><span class="o">(</span><span class="m">2</span><span class="w"> </span>days<span class="w"> </span>ago<span class="o">)</span><span class="w"> </span><span class="o">(</span>committed:<span class="w"> </span>Mon,<span class="w"> </span><span class="m">3</span><span class="w"> </span>Oct<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">17</span>:18:23<span class="w"> </span>+0200<span class="o">)</span><span class="w">  </span><span class="o">(</span>things<span class="o">)</span>
+<span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w">           </span>Add<span class="w"> </span>more<span class="w"> </span>favorite<span class="w"> </span>things
+<span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w">           </span>-<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="w">  </span><span class="o">(</span>committer:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="o">)</span>
+<span class="p">|</span><span class="w"> </span>*<span class="w"> </span>6b5733b<span class="w"> </span>-<span class="w"> </span>Fri,<span class="w"> </span><span class="m">30</span><span class="w"> </span>Sep<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">16</span>:21:07<span class="w"> </span>+0200<span class="w"> </span><span class="o">(</span><span class="m">5</span><span class="w"> </span>days<span class="w"> </span>ago<span class="o">)</span><span class="w"> </span><span class="o">(</span>committed:<span class="w"> </span>Fri,<span class="w"> </span><span class="m">30</span><span class="w"> </span>Sep<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">16</span>:21:07<span class="w"> </span>+0200<span class="o">)</span>
+<span class="p">|</span>/<span class="w">            </span>List<span class="w"> </span>beautiful<span class="w"> </span>things
+<span class="p">|</span><span class="w">             </span>-<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="w">  </span><span class="o">(</span>committer:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="o">)</span>
+*<span class="w"> </span>94af264<span class="w"> </span>-<span class="w"> </span>Wed,<span class="w"> </span><span class="m">7</span><span class="w"> </span>Sep<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">15</span>:48:49<span class="w"> </span>+0200<span class="w"> </span><span class="o">(</span><span class="m">4</span><span class="w"> </span>weeks<span class="w"> </span>ago<span class="o">)</span><span class="w"> </span><span class="o">(</span>committed:<span class="w"> </span>Wed,<span class="w"> </span><span class="m">7</span><span class="w"> </span>Sep<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">15</span>:48:49<span class="w"> </span>+0200<span class="o">)</span><span class="w">  </span><span class="o">(</span>origin/master,<span class="w"> </span>borked/new<span class="o">)</span>
+<span class="p">|</span><span class="w">           </span>Add<span class="w"> </span>cake<span class="w"> </span>declaration
+<span class="p">|</span><span class="w">           </span>-<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="w">  </span><span class="o">(</span>committer:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="o">)</span>
+*<span class="w"> </span>b2c2e84<span class="w"> </span>-<span class="w"> </span>Wed,<span class="w"> </span><span class="m">17</span><span class="w"> </span>Aug<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">12</span>:30:36<span class="w"> </span>+0200<span class="w"> </span><span class="o">(</span><span class="m">7</span><span class="w"> </span>weeks<span class="w"> </span>ago<span class="o">)</span><span class="w"> </span><span class="o">(</span>committed:<span class="w"> </span>Wed,<span class="w"> </span><span class="m">7</span><span class="w"> </span>Sep<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">15</span>:47:42<span class="w"> </span>+0200<span class="o">)</span>
+<span class="p">|</span><span class="w">           </span>Create<span class="w"> </span>a<span class="w"> </span>vector
+<span class="p">|</span><span class="w">           </span>-<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="w">  </span><span class="o">(</span>committer:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="o">)</span>
+*<span class="w"> </span>02b6530<span class="w"> </span>-<span class="w"> </span>Wed,<span class="w"> </span><span class="m">17</span><span class="w"> </span>Aug<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">12</span>:19:18<span class="w"> </span>+0200<span class="w"> </span><span class="o">(</span><span class="m">7</span><span class="w"> </span>weeks<span class="w"> </span>ago<span class="o">)</span><span class="w"> </span><span class="o">(</span>committed:<span class="w"> </span>Wed,<span class="w"> </span><span class="m">17</span><span class="w"> </span>Aug<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">12</span>:19:18<span class="w"> </span>+0200<span class="o">)</span>
+<span class="w">            </span>Initial<span class="w"> </span>commit
+<span class="w">            </span>-<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="w">  </span><span class="o">(</span>committer:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="o">)</span>
+</pre></div>
+</div>
+</section>
+<section id="diff-ing-in-git">
+<h3><span class="section-number">5.4.2. </span>Diff’ing in git<a class="headerlink" href="#diff-ing-in-git" title="Link to this heading">#</a></h3>
+<p>Similar to visualising the git history, showing the differences between files in different commits, branches, the staging area or your working directory, is something that git GUIs are very useful for. However, sometimes a CLI is all you have or even quicker for some of the more complex operations. So here is a quick overview of some of the options.</p>
+<p>I suggest you play around with this as you go along the rest of the workshop, to get a feel for how these commands work.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">diff</span> <span class="pre">[&lt;filepath&gt;]</span></code>: this will compare the contents of your working directory with the files that are staged in the index. Omitting the filepath will compare all files. Note that this will not show you untracked (new) files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">diff</span> <span class="pre">--cached</span> <span class="pre">[&lt;commit&gt;]</span> <span class="pre">[&lt;filepath&gt;]</span></code>: shows the difference between the index and a commit (defaults to the most recent one, i.e. <code class="docutils literal notranslate"><span class="pre">HEAD</span></code>). Can also take a filepath.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">diff</span> <span class="pre">&lt;branch&gt;</span> <span class="pre">&lt;branch&gt;</span> <span class="pre">[&lt;filepath&gt;]</span></code>: shows the difference between two branches/commits. Can also take a filepath.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">diff</span> <span class="pre">&lt;commit&gt;</span> <span class="pre">&lt;filepath&gt;</span></code>: shows the differences in a file between a commit (<code class="docutils literal notranslate"><span class="pre">HEAD</span> <span class="pre">by</span> <span class="pre">default</span></code>) and the working directory. Can also take a filepath.</p></li>
+</ul>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.atlassian.com/git/tutorials/saving-changes/git-diff">https://www.atlassian.com/git/tutorials/saving-changes/git-diff</a></p></li>
+<li><p><a class="reference external" href="https://www.cloudbees.com/blog/git-diff-a-complete-comparison-tutorial-for-git">https://www.cloudbees.com/blog/git-diff-a-complete-comparison-tutorial-for-git</a></p></li>
+</ul>
+</div>
+<hr class="docutils" />
+<p>Now let’s continue exploring branches!</p>
+</section>
+</section>
+<section id="merging-altered-branches">
+<h2><span class="section-number">5.5. </span>Merging altered branches<a class="headerlink" href="#merging-altered-branches" title="Link to this heading">#</a></h2>
+<p>In this section we will explore what happens when we try to merge branches that have both been altered.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-8" name="sd-tab-set-4" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-8">
+Exercise</label><div class="sd-tab-content docutils">
+<div class="hint admonition">
+<p class="admonition-title">Instructions</p>
+<ul class="simple">
+<li><p>Create a new feature branch and switch to it.</p></li>
+<li><p>Create or modify files and commit them.</p></li>
+<li><p>Switch back to the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch, create yet another file and commit it. Make sure the file differs from any files you created in the feature branch.</p></li>
+<li><p>Compare the differences between the branches.</p></li>
+<li><p>Merge your feature branch into <code class="docutils literal notranslate"><span class="pre">master</span></code>.</p></li>
+<li><p>Check the git log (graph).</p></li>
+</ul>
+</div>
+</div>
+<input id="sd-tab-item-9" name="sd-tab-set-4" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-9">
+Solution</label><div class="sd-tab-content docutils">
+<p>First, create a new branch and create a new commit:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>switch<span class="w"> </span>-c<span class="w"> </span>jokes
+
+cat<span class="w"> </span>&gt;&gt;<span class="w"> </span>jokes.txt<span class="w"> </span><span class="s">&lt;&lt;EOL</span>
+<span class="s">“A moth goes into a podiatrist’s office, and the podiatrist’s office says,</span>
+<span class="s">“What seems to be the problem, moth?”</span>
+<span class="s">The moth says “What’s the problem? Where do I begin, man?</span>
+<span class="s">I go to work for Gregory Illinivich, and all day long I work. Honestly doc, I don’t</span>
+<span class="s">even know what I’m doing anymore. I don’t even know if Gregory Illinivich knows.</span>
+<span class="s">He only knows that he has power over me, and that seems to bring him happiness.</span>
+<span class="s">But I don’t know, I wake up in a malaise, and I walk here and there… at night I…I</span>
+<span class="s">sometimes wake up and I turn to some old lady in my bed that’s on my arm. A lady that</span>
+<span class="s">I once loved, doc. I don’t know where to turn to. My youngest, Alexendria, she fell in</span>
+<span class="s">the…in the cold of last year. The cold took her down, as it did many of us.</span>
+<span class="s">And my other boy, and this is the hardest pill to swallow, doc. My other boy,</span>
+<span class="s">Gregarro Ivinalititavitch… I no longer love him. As much as it pains me to say,</span>
+<span class="s">when I look in his eyes, all I see is the same cowardice that I… that I catch</span>
+<span class="s">when I take a glimpse of my own face in the mirror. If only I wasn’t such a coward,</span>
+<span class="s">then perhaps…perhaps I could bring myself to reach over to that cocked and loaded gun</span>
+<span class="s">that lays on the bedside behind me and end this hellish facade once and for all…</span>
+<span class="s">Doc, sometimes I feel like a spider, even though I’m a moth, just barely hanging on</span>
+<span class="s">to my web with an everlasting fire underneath me. I’m not feeling good.</span>
+<span class="s">And so the doctor says, “Moth, man, you’re troubled. But you should be seeing a psychiatrist.</span>
+<span class="s">Why on earth did you come here?”</span>
+
+<span class="s">And the moth says, “‘Cause the light was on.”</span>
+
+<span class="s">― Norm Macdonald</span>
+<span class="s">EOL</span>
+
+git<span class="w"> </span>add<span class="w"> </span>-A
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Add joke&quot;</span>
+</pre></div>
+</div>
+<p>Inspect the history:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>log<span class="w"> </span>--graph<span class="w"> </span>--pretty<span class="w"> </span>--oneline
+*<span class="w"> </span>e1d2ed8<span class="w"> </span><span class="o">(</span>HEAD<span class="w"> </span>-&gt;<span class="w"> </span>jokes<span class="o">)</span><span class="w"> </span>Add<span class="w"> </span>joke
+*<span class="w">   </span>bda49b2<span class="w"> </span>Merge<span class="w"> </span>branch<span class="w"> </span><span class="s1">&#39;things&#39;</span>
+<span class="p">|</span><span class="se">\</span>
+<span class="p">|</span><span class="w"> </span>*<span class="w"> </span>1dfd056<span class="w"> </span><span class="o">(</span>things<span class="o">)</span><span class="w"> </span>Add<span class="w"> </span>more<span class="w"> </span>favorite<span class="w"> </span>things
+<span class="p">|</span><span class="w"> </span>*<span class="w"> </span>6b5733b<span class="w"> </span>List<span class="w"> </span>beautiful<span class="w"> </span>things
+<span class="p">|</span>/
+*<span class="w"> </span>94af264<span class="w"> </span><span class="o">(</span>origin/master,<span class="w"> </span>borked/new<span class="o">)</span><span class="w"> </span>Add<span class="w"> </span>cake<span class="w"> </span>declaration
+*<span class="w"> </span>b2c2e84<span class="w"> </span>Create<span class="w"> </span>a<span class="w"> </span>vector
+*<span class="w"> </span>02b6530<span class="w"> </span>Initial<span class="w"> </span>commit
+</pre></div>
+</div>
+<p>Then do the same thing on the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>switch<span class="w"> </span>master
+
+cat<span class="w"> </span>&gt;&gt;<span class="w"> </span>quotes.txt<span class="w"> </span><span class="s">&lt;&lt;EOL</span>
+<span class="s">&quot;She was not someone to use extreme language, but it was possible to be sure that when she deployed a mild term like ‘a bee in her bonnet’ she was using it to define someone whom she believed to be several miles over the madness horizon and accelerating.&quot;</span>
+
+<span class="s">― Terry Pratchett, Witches Abroad</span>
+<span class="s">EOL</span>
+
+git<span class="w"> </span>add<span class="w"> </span>-A
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Add quote&quot;</span>
+</pre></div>
+</div>
+<p>Again, inspect the history:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>log<span class="w"> </span>--graph<span class="w"> </span>--pretty<span class="w"> </span>--oneline
+*<span class="w"> </span>a75b2e0<span class="w"> </span><span class="o">(</span>HEAD<span class="w"> </span>-&gt;<span class="w"> </span>master<span class="o">)</span><span class="w"> </span>Add<span class="w"> </span>quote
+*<span class="w">   </span>bda49b2<span class="w"> </span>Merge<span class="w"> </span>branch<span class="w"> </span><span class="s1">&#39;things&#39;</span>
+<span class="p">|</span><span class="se">\</span>
+<span class="p">|</span><span class="w"> </span>*<span class="w"> </span>1dfd056<span class="w"> </span><span class="o">(</span>things<span class="o">)</span><span class="w"> </span>Add<span class="w"> </span>more<span class="w"> </span>favorite<span class="w"> </span>things
+<span class="p">|</span><span class="w"> </span>*<span class="w"> </span>6b5733b<span class="w"> </span>List<span class="w"> </span>beautiful<span class="w"> </span>things
+<span class="p">|</span>/
+*<span class="w"> </span>94af264<span class="w"> </span><span class="o">(</span>origin/master,<span class="w"> </span>borked/new<span class="o">)</span><span class="w"> </span>Add<span class="w"> </span>cake<span class="w"> </span>declaration
+*<span class="w"> </span>b2c2e84<span class="w"> </span>Create<span class="w"> </span>a<span class="w"> </span>vector
+*<span class="w"> </span>02b6530<span class="w"> </span>Initial<span class="w"> </span>commit
+</pre></div>
+</div>
+<p>Lastly, try to merge the two and inspect the log.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>merge<span class="w"> </span>jokes
+Merge<span class="w"> </span>made<span class="w"> </span>by<span class="w"> </span>the<span class="w"> </span><span class="s1">&#39;recursive&#39;</span><span class="w"> </span>strategy.
+<span class="w"> </span>jokes.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">7</span><span class="w"> </span>+++++++
+<span class="w"> </span><span class="m">1</span><span class="w"> </span>file<span class="w"> </span>changed,<span class="w"> </span><span class="m">7</span><span class="w"> </span>insertions<span class="o">(</span>+<span class="o">)</span>
+<span class="w"> </span>create<span class="w"> </span>mode<span class="w"> </span><span class="m">100644</span><span class="w"> </span>jokes.txt
+
+$<span class="w"> </span>git<span class="w"> </span>graph
+*<span class="w">   </span>b913749<span class="w"> </span>-<span class="w"> </span>Wed,<span class="w"> </span><span class="m">5</span><span class="w"> </span>Oct<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">15</span>:43:48<span class="w"> </span>+0200<span class="w"> </span><span class="o">(</span><span class="m">39</span><span class="w"> </span>seconds<span class="w"> </span>ago<span class="o">)</span><span class="w"> </span><span class="o">(</span>committed:<span class="w"> </span>Wed,<span class="w"> </span><span class="m">5</span><span class="w"> </span>Oct<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">15</span>:43:48<span class="w"> </span>+0200<span class="o">)</span><span class="w">  </span><span class="o">(</span>HEAD<span class="w"> </span>-&gt;<span class="w"> </span>master<span class="o">)</span>
+<span class="p">|</span><span class="se">\ </span><span class="w">           </span>Merge<span class="w"> </span>branch<span class="w"> </span><span class="s1">&#39;jokes&#39;</span>
+<span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w">           </span>-<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="w">  </span><span class="o">(</span>committer:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="o">)</span>
+<span class="p">|</span><span class="w"> </span>*<span class="w"> </span>e1d2ed8<span class="w"> </span>-<span class="w"> </span>Wed,<span class="w"> </span><span class="m">5</span><span class="w"> </span>Oct<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">15</span>:41:06<span class="w"> </span>+0200<span class="w"> </span><span class="o">(</span><span class="m">3</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="o">)</span><span class="w"> </span><span class="o">(</span>committed:<span class="w"> </span>Wed,<span class="w"> </span><span class="m">5</span><span class="w"> </span>Oct<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">15</span>:41:06<span class="w"> </span>+0200<span class="o">)</span><span class="w">  </span><span class="o">(</span>jokes<span class="o">)</span>
+<span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w">           </span>Add<span class="w"> </span>joke
+<span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w">           </span>-<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="w">  </span><span class="o">(</span>committer:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="o">)</span>
+*<span class="w"> </span><span class="p">|</span><span class="w"> </span>a75b2e0<span class="w"> </span>-<span class="w"> </span>Wed,<span class="w"> </span><span class="m">5</span><span class="w"> </span>Oct<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">15</span>:41:21<span class="w"> </span>+0200<span class="w"> </span><span class="o">(</span><span class="m">3</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="o">)</span><span class="w"> </span><span class="o">(</span>committed:<span class="w"> </span>Wed,<span class="w"> </span><span class="m">5</span><span class="w"> </span>Oct<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">15</span>:41:21<span class="w"> </span>+0200<span class="o">)</span>
+<span class="p">|</span>/<span class="w">            </span>Add<span class="w"> </span>quote
+<span class="p">|</span><span class="w">             </span>-<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="w">  </span><span class="o">(</span>committer:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="o">)</span>
+*<span class="w">   </span>bda49b2<span class="w"> </span>-<span class="w"> </span>Wed,<span class="w"> </span><span class="m">5</span><span class="w"> </span>Oct<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">14</span>:42:57<span class="w"> </span>+0200<span class="w"> </span><span class="o">(</span><span class="m">62</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="o">)</span><span class="w"> </span><span class="o">(</span>committed:<span class="w"> </span>Wed,<span class="w"> </span><span class="m">5</span><span class="w"> </span>Oct<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">14</span>:42:57<span class="w"> </span>+0200<span class="o">)</span>
+<span class="p">|</span><span class="se">\ </span><span class="w">           </span>Merge<span class="w"> </span>branch<span class="w"> </span><span class="s1">&#39;things&#39;</span>
+<span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w">           </span>-<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="w">  </span><span class="o">(</span>committer:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="o">)</span>
+<span class="p">|</span><span class="w"> </span>*<span class="w"> </span>1dfd056<span class="w"> </span>-<span class="w"> </span>Mon,<span class="w"> </span><span class="m">3</span><span class="w"> </span>Oct<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">15</span>:06:10<span class="w"> </span>+0200<span class="w"> </span><span class="o">(</span><span class="m">2</span><span class="w"> </span>days<span class="w"> </span>ago<span class="o">)</span><span class="w"> </span><span class="o">(</span>committed:<span class="w"> </span>Mon,<span class="w"> </span><span class="m">3</span><span class="w"> </span>Oct<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">17</span>:18:23<span class="w"> </span>+0200<span class="o">)</span><span class="w">  </span><span class="o">(</span>things<span class="o">)</span>
+<span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w">           </span>Add<span class="w"> </span>more<span class="w"> </span>favorite<span class="w"> </span>things
+<span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w">           </span>-<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="w">  </span><span class="o">(</span>committer:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="o">)</span>
+<span class="p">|</span><span class="w"> </span>*<span class="w"> </span>6b5733b<span class="w"> </span>-<span class="w"> </span>Fri,<span class="w"> </span><span class="m">30</span><span class="w"> </span>Sep<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">16</span>:21:07<span class="w"> </span>+0200<span class="w"> </span><span class="o">(</span><span class="m">5</span><span class="w"> </span>days<span class="w"> </span>ago<span class="o">)</span><span class="w"> </span><span class="o">(</span>committed:<span class="w"> </span>Fri,<span class="w"> </span><span class="m">30</span><span class="w"> </span>Sep<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">16</span>:21:07<span class="w"> </span>+0200<span class="o">)</span>
+<span class="p">|</span>/<span class="w">            </span>List<span class="w"> </span>beautiful<span class="w"> </span>things
+<span class="p">|</span><span class="w">             </span>-<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="w">  </span><span class="o">(</span>committer:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="o">)</span>
+*<span class="w"> </span>94af264<span class="w"> </span>-<span class="w"> </span>Wed,<span class="w"> </span><span class="m">7</span><span class="w"> </span>Sep<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">15</span>:48:49<span class="w"> </span>+0200<span class="w"> </span><span class="o">(</span><span class="m">4</span><span class="w"> </span>weeks<span class="w"> </span>ago<span class="o">)</span><span class="w"> </span><span class="o">(</span>committed:<span class="w"> </span>Wed,<span class="w"> </span><span class="m">7</span><span class="w"> </span>Sep<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">15</span>:48:49<span class="w"> </span>+0200<span class="o">)</span><span class="w">  </span><span class="o">(</span>origin/master,<span class="w"> </span>borked/new<span class="o">)</span>
+<span class="p">|</span><span class="w">           </span>Add<span class="w"> </span>cake<span class="w"> </span>declaration
+<span class="p">|</span><span class="w">           </span>-<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="w">  </span><span class="o">(</span>committer:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="o">)</span>
+*<span class="w"> </span>b2c2e84<span class="w"> </span>-<span class="w"> </span>Wed,<span class="w"> </span><span class="m">17</span><span class="w"> </span>Aug<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">12</span>:30:36<span class="w"> </span>+0200<span class="w"> </span><span class="o">(</span><span class="m">7</span><span class="w"> </span>weeks<span class="w"> </span>ago<span class="o">)</span><span class="w"> </span><span class="o">(</span>committed:<span class="w"> </span>Wed,<span class="w"> </span><span class="m">7</span><span class="w"> </span>Sep<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">15</span>:47:42<span class="w"> </span>+0200<span class="o">)</span>
+<span class="p">|</span><span class="w">           </span>Create<span class="w"> </span>a<span class="w"> </span>vector
+<span class="p">|</span><span class="w">           </span>-<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="w">  </span><span class="o">(</span>committer:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="o">)</span>
+*<span class="w"> </span>02b6530<span class="w"> </span>-<span class="w"> </span>Wed,<span class="w"> </span><span class="m">17</span><span class="w"> </span>Aug<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">12</span>:19:18<span class="w"> </span>+0200<span class="w"> </span><span class="o">(</span><span class="m">7</span><span class="w"> </span>weeks<span class="w"> </span>ago<span class="o">)</span><span class="w"> </span><span class="o">(</span>committed:<span class="w"> </span>Wed,<span class="w"> </span><span class="m">17</span><span class="w"> </span>Aug<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">12</span>:19:18<span class="w"> </span>+0200<span class="o">)</span>
+<span class="w">            </span>Initial<span class="w"> </span>commit
+<span class="w">            </span>-<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="w">  </span><span class="o">(</span>committer:<span class="w"> </span>Pieter<span class="w"> </span>Moris<span class="w"> </span>&lt;<span class="m">13552343</span>+pmoris@users.noreply.github.com&gt;<span class="o">)</span>
+</pre></div>
+</div>
+<p>We can see that a merge commit was created which has as its parents the commits created on the different branches.</p>
+</div>
+</div>
+<p>So far, so good, right? Nothing unexpected happened. Onwards!</p>
+</section>
+<section id="merging-conflicting-branches">
+<h2><span class="section-number">5.6. </span>Merging conflicting branches<a class="headerlink" href="#merging-conflicting-branches" title="Link to this heading">#</a></h2>
+<p>What happens when the same files have been altered in the branches that we try to merge? Well, this is where so called <em>conflicts</em> might arise. If the file already existed in both branches, and, for example, lines were added at the top and bottom in each branch respectively, there would be no issue and git will happily merge the branches and files. However, sometimes the changes contradict each other. Or there will be so many changes that git cannot work out what should be done. In those situations, we will have to solve the conflicts ourselves.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging#_basic_merge_conflicts">https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging#_basic_merge_conflicts</a></p></li>
+<li><p><a class="reference external" href="https://git-scm.com/book/en/v2/Git-Tools-Advanced-Merging">https://git-scm.com/book/en/v2/Git-Tools-Advanced-Merging</a></p></li>
+<li><p><a class="reference external" href="https://www.atlassian.com/git/tutorials/using-branches/merge-conflicts">https://www.atlassian.com/git/tutorials/using-branches/merge-conflicts</a></p></li>
+</ul>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-10" name="sd-tab-set-5" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-10">
+Exercise</label><div class="sd-tab-content docutils">
+<div class="hint admonition">
+<p class="admonition-title">Instructions</p>
+<ul class="simple">
+<li><p>Create a new file and commit it to the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch.</p></li>
+<li><p>Create a new branch, switch to it, modify the file and commit it.</p></li>
+<li><p>Switch back to <code class="docutils literal notranslate"><span class="pre">master</span></code>, modify the file in a different way and commit it.</p></li>
+<li><p>Attempt to merge the branches and resolve the conflicts.</p></li>
+</ul>
+</div>
+</div>
+<input id="sd-tab-item-11" name="sd-tab-set-5" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-11">
+Solution</label><div class="sd-tab-content docutils">
+<p>Creating a new file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;&quot;...!&quot; cried Gandalf&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>khazad-dum.bridge
+git<span class="w"> </span>add<span class="w"> </span>-A
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Recall the tragedy in Moria&quot;</span>
+</pre></div>
+</div>
+<p>Creating a new branch and modifying the same file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>switch<span class="w"> </span>-c<span class="w"> </span>flee
+sed<span class="w"> </span>-i<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;s/[.]{3}/Flee you fools/g&#39;</span><span class="w"> </span>khazad-dum.bridge
+git<span class="w"> </span>add<span class="w"> </span>-A
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Flee!&quot;</span>
+</pre></div>
+</div>
+<p>Switch back to <code class="docutils literal notranslate"><span class="pre">master</span></code> and modify the same file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>switch<span class="w"> </span>master
+sed<span class="w"> </span>-i<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;s/[.]{3}/Fly you fools/g&#39;</span><span class="w"> </span>khazad-dum.bridge
+git<span class="w"> </span>add<span class="w"> </span>-A
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Fly!&quot;</span>
+</pre></div>
+</div>
+<p>Attempt to merge:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>merge<span class="w"> </span>flee
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Auto-merging<span class="w"> </span>khazad-dum.bridge
+CONFLICT<span class="w"> </span><span class="o">(</span>content<span class="o">)</span>:<span class="w"> </span>Merge<span class="w"> </span>conflict<span class="w"> </span><span class="k">in</span><span class="w"> </span>khazad-dum.bridge
+Automatic<span class="w"> </span>merge<span class="w"> </span>failed<span class="p">;</span><span class="w"> </span>fix<span class="w"> </span>conflicts<span class="w"> </span>and<span class="w"> </span><span class="k">then</span><span class="w"> </span>commit<span class="w"> </span>the<span class="w"> </span>result.
+</pre></div>
+</div>
+<p>Git warns us that there are conflicts in our files. Open them up in a text editor and see what it has done to help you resolve them! If you were to open this file in a fancy text editor like VSCode, it would even highlight these sections for you.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cat<span class="w"> </span>khazad-dum.bridge
+<span class="o">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt;<span class="w"> </span>HEAD
+<span class="s2">&quot;Fly you fools!&quot;</span><span class="w"> </span>cried<span class="w"> </span><span class="nv">Gandalf</span>
+<span class="o">=======</span>
+<span class="s2">&quot;Flee you fools!&quot;</span><span class="w"> </span>cried<span class="w"> </span>Gandalf
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;<span class="w"> </span>flee
+</pre></div>
+</div>
+<p>At this point, have a look at what <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> has to say:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>status
+On<span class="w"> </span>branch<span class="w"> </span>master
+Your<span class="w"> </span>branch<span class="w"> </span>is<span class="w"> </span>ahead<span class="w"> </span>of<span class="w"> </span><span class="s1">&#39;origin/master&#39;</span><span class="w"> </span>by<span class="w"> </span><span class="m">8</span><span class="w"> </span>commits.
+<span class="w">  </span><span class="o">(</span>use<span class="w"> </span><span class="s2">&quot;git push&quot;</span><span class="w"> </span>to<span class="w"> </span>publish<span class="w"> </span>your<span class="w"> </span><span class="nb">local</span><span class="w"> </span>commits<span class="o">)</span>
+
+You<span class="w"> </span>have<span class="w"> </span>unmerged<span class="w"> </span>paths.
+<span class="w">  </span><span class="o">(</span>fix<span class="w"> </span>conflicts<span class="w"> </span>and<span class="w"> </span>run<span class="w"> </span><span class="s2">&quot;git commit&quot;</span><span class="o">)</span>
+<span class="w">  </span><span class="o">(</span>use<span class="w"> </span><span class="s2">&quot;git merge --abort&quot;</span><span class="w"> </span>to<span class="w"> </span>abort<span class="w"> </span>the<span class="w"> </span>merge<span class="o">)</span>
+
+Unmerged<span class="w"> </span>paths:
+<span class="w">  </span><span class="o">(</span>use<span class="w"> </span><span class="s2">&quot;git add &lt;file&gt;...&quot;</span><span class="w"> </span>to<span class="w"> </span>mark<span class="w"> </span>resolution<span class="o">)</span>
+<span class="w">        </span>both<span class="w"> </span>modified:<span class="w">   </span>khazad-dum.bridge
+
+no<span class="w"> </span>changes<span class="w"> </span>added<span class="w"> </span>to<span class="w"> </span>commit<span class="w"> </span><span class="o">(</span>use<span class="w"> </span><span class="s2">&quot;git add&quot;</span><span class="w"> </span>and/or<span class="w"> </span><span class="s2">&quot;git commit -a&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">merge</span> <span class="pre">--abort</span></code> command it mentions is a good one to remember. If you want to back out of the whole thing, perhaps because you attempted to merge the wrong branches, then you can still do so without any issues.</p>
+<p>In order to fix the actual conflict itself, simply remove the section that is not required in the file. **Make sure that you remove the <code class="docutils literal notranslate"><span class="pre">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span></code>, <code class="docutils literal notranslate"><span class="pre">=======</span></code> and <code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span></code> sections as well. Because otherwise git will happily commit them for you as part of your “intended” changes.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>GNU<span class="w"> </span>nano<span class="w"> </span><span class="m">4</span>.8<span class="w">                                                                                    </span>khazad-dum.bridge<span class="w">                                                                                    </span>Modified
+<span class="s2">&quot;Fly you fools!&quot;</span><span class="w"> </span>cried<span class="w"> </span>Gandalf
+</pre></div>
+</div>
+<p>Then, like <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> instructed us, add the altered file and commit again to finalise the merge:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>-A
+git<span class="w"> </span>commit
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>commit
+<span class="o">[</span>master<span class="w"> </span>86447c5<span class="o">]</span><span class="w"> </span>Merge<span class="w"> </span>branch<span class="w"> </span><span class="s1">&#39;flee&#39;</span>
+</pre></div>
+</div>
+<p>This is what the commit editor would show you:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Merge</span> <span class="n">branch</span> <span class="s1">&#39;flee&#39;</span>
+
+<span class="c1"># Conflicts:</span>
+<span class="c1">#       khazad-dum.bridge</span>
+<span class="c1">#</span>
+<span class="c1"># It looks like you may be committing a merge.</span>
+<span class="c1"># If this is not correct, please remove the file</span>
+<span class="c1">#       .git/MERGE_HEAD</span>
+<span class="c1"># and try again.</span>
+
+
+<span class="c1"># Please enter the commit message for your changes. Lines starting</span>
+<span class="c1"># with &#39;#&#39; will be ignored, and an empty message aborts the commit.</span>
+<span class="c1">#</span>
+<span class="c1"># On branch master</span>
+<span class="c1"># Your branch is ahead of &#39;origin/master&#39; by 8 commits.</span>
+<span class="c1">#   (use &quot;git push&quot; to publish your local commits)</span>
+<span class="c1">#</span>
+<span class="c1"># All conflicts fixed but you are still merging.</span>
+<span class="c1">#</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img alt="fig-conflicts-everywhere" class="bg-primary align-center" src="../_images/conflicts.jpg" />
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="6-collaboration.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">6. </span>Collaboration</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="4-remotes.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">4. </span>Working with remotes</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Pieter Moris
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">5. Branching</a><ul>
+<li><a class="reference internal" href="#creating-a-new-branch">5.1. Creating a new branch</a></li>
+<li><a class="reference internal" href="#moving-between-branches">5.2. Moving between branches</a></li>
+<li><a class="reference internal" href="#merging-a-branch">5.3. Merging a branch</a></li>
+<li><a class="reference internal" href="#a-few-short-intermezzos">5.4. A few short intermezzos</a><ul>
+<li><a class="reference internal" href="#visualising-the-git-graph">5.4.1. Visualising the git graph</a></li>
+<li><a class="reference internal" href="#diff-ing-in-git">5.4.2. Diff’ing in git</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#merging-altered-branches">5.5. Merging altered branches</a></li>
+<li><a class="reference internal" href="#merging-conflicting-branches">5.6. Merging conflicting branches</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    </body>
+</html>
